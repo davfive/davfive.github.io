@@ -6,7 +6,7 @@
 <title>Lesson 27 — Error Propagation Strategies Across Multi-Agent Systems</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0027-error-propagation-strategies-across-multiagent-systems.html" data-domain="5" data-task-id="5.3" data-lesson-title="Error Propagation Strategies Across Multi-Agent Systems">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -38,11 +38,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      This is the exact conflation the guide flags as a bug: an access failure (timeout) and a valid empty result look identical without structured context, and that difference is exactly what the coordinator needs to decide whether to retry.
+      <span class="fb-text">This is the exact conflation the guide flags as a bug: an access failure (timeout) and a valid empty result look identical without structured context, and that difference is exactly what the coordinator needs to decide whether to retry.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      Terminating the whole pipeline over one subagent's failure is the named overcorrection anti-pattern — it discards everything that succeeded elsewhere. Re-running everything from scratch is wasteful when only one subtopic actually failed. Forcing a low-relevance result to avoid "empty" output actively hides the real problem rather than surfacing it.
+      <span class="fb-text">Terminating the whole pipeline over one subagent's failure is the named overcorrection anti-pattern — it discards everything that succeeded elsewhere. Re-running everything from scratch is wasteful when only one subtopic actually failed. Forcing a low-relevance result to avoid "empty" output actively hides the real problem rather than surfacing it.</span>
     </div>
   </div>
 

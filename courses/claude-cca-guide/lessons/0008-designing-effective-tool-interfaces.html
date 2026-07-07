@@ -6,7 +6,7 @@
 <title>Lesson 8 — Designing Effective Tool Interfaces</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0008-designing-effective-tool-interfaces.html" data-domain="2" data-task-id="2.1" data-lesson-title="Designing Effective Tool Interfaces">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -41,11 +41,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      Tool descriptions are the model's primary selection signal. Minimal, overlapping descriptions are the root cause here — expanding them with concrete boundaries is the lowest-effort, highest-leverage fix, and it's the guide's stated first step.
+      <span class="fb-text">Tool descriptions are the model's primary selection signal. Minimal, overlapping descriptions are the root cause here — expanding them with concrete boundaries is the lowest-effort, highest-leverage fix, and it's the guide's stated first step.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      Few-shot examples add real value eventually, but they treat a symptom (inconsistent selection) rather than the root cause (vague descriptions), and add token overhead before the cheaper fix has been tried. Merging the tools is a legitimate architectural option, but it skips past the low-effort fix that should come first. A keyword-based routing step reintroduces a rigid pre-classifier that bypasses the model's own language understanding — over-engineered as a first step.
+      <span class="fb-text">Few-shot examples add real value eventually, but they treat a symptom (inconsistent selection) rather than the root cause (vague descriptions), and add token overhead before the cheaper fix has been tried. Merging the tools is a legitimate architectural option, but it skips past the low-effort fix that should come first. A keyword-based routing step reintroduces a rigid pre-classifier that bypasses the model's own language understanding — over-engineered as a first step.</span>
     </div>
   </div>
 

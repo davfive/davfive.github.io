@@ -6,7 +6,7 @@
 <title>Lesson 3 — Subagent Invocation, Context Passing & Spawning</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0003-subagent-invocation-context-passing-and-spawning.html" data-domain="1" data-task-id="1.3" data-lesson-title="Subagent Invocation, Context Passing &amp; Spawning">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -39,11 +39,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      Independent subtasks delegated as multiple Task calls within one response is what actually triggers parallel execution, instead of one-at-a-time sequential waits.
+      <span class="fb-text">Independent subtasks delegated as multiple Task calls within one response is what actually triggers parallel execution, instead of one-at-a-time sequential waits.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      Merging the subtasks throws away the isolation and specialization benefits of separate subagents for no reason — they're independent, not overlapping. A bigger context window doesn't address the real issue, which is turn structure, not capacity. A speed instruction papers over a structural serialization problem instead of fixing it — the coordinator isn't slow, it's blocked waiting on each subagent sequentially by construction.
+      <span class="fb-text">Merging the subtasks throws away the isolation and specialization benefits of separate subagents for no reason — they're independent, not overlapping. A bigger context window doesn't address the real issue, which is turn structure, not capacity. A speed instruction papers over a structural serialization problem instead of fixing it — the coordinator isn't slow, it's blocked waiting on each subagent sequentially by construction.</span>
     </div>
   </div>
 

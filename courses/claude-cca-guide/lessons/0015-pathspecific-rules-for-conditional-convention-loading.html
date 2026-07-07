@@ -6,7 +6,7 @@
 <title>Lesson 15 — Path-Specific Rules for Conditional Convention Loading</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0015-pathspecific-rules-for-conditional-convention-loading.html" data-domain="3" data-task-id="3.3" data-lesson-title="Path-Specific Rules for Conditional Convention Loading">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -37,11 +37,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      This is exactly the guide's stated advantage of path-specific rules: a glob pattern like **/*.test.tsx applies by file type wherever the file lives, which directory-scoped CLAUDE.md structurally cannot do without duplicating the file in every directory.
+      <span class="fb-text">This is exactly the guide's stated advantage of path-specific rules: a glob pattern like **/*.test.tsx applies by file type wherever the file lives, which directory-scoped CLAUDE.md structurally cannot do without duplicating the file in every directory.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      Directory-level CLAUDE.md files would need to be duplicated across every directory containing a test file — brittle and easy to miss one. Loading the conventions into the root CLAUDE.md means every session pays the token cost even when no test files are being touched. A manual slash command depends on the developer remembering to invoke it, defeating the point of automatic conditional loading.
+      <span class="fb-text">Directory-level CLAUDE.md files would need to be duplicated across every directory containing a test file — brittle and easy to miss one. Loading the conventions into the root CLAUDE.md means every session pays the token cost even when no test files are being touched. A manual slash command depends on the developer remembering to invoke it, defeating the point of automatic conditional loading.</span>
     </div>
   </div>
 

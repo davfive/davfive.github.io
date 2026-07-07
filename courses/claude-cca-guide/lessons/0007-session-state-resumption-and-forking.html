@@ -6,7 +6,7 @@
 <title>Lesson 7 — Session State, Resumption & Forking</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0007-session-state-resumption-and-forking.html" data-domain="1" data-task-id="1.7" data-lesson-title="Session State, Resumption &amp; Forking">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -36,11 +36,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      Resumption assumes prior context is still valid. When specific files changed, telling the agent exactly what changed lets it re-analyze just those files — the targeted fix, versus full re-exploration.
+      <span class="fb-text">Resumption assumes prior context is still valid. When specific files changed, telling the agent exactly what changed lets it re-analyze just those files — the targeted fix, versus full re-exploration.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      Starting over discards everything still valid from the prior session to fix a problem that only affects a few files. A bigger context window doesn't solve staleness — having both versions present doesn't tell the model which one is current. Blanket re-reading on every resume is wasteful for large codebases and defeats the purpose of resuming a session at all.
+      <span class="fb-text">Starting over discards everything still valid from the prior session to fix a problem that only affects a few files. A bigger context window doesn't solve staleness — having both versions present doesn't tell the model which one is current. Blanket re-reading on every resume is wasteful for large codebases and defeats the purpose of resuming a session at all.</span>
     </div>
   </div>
 

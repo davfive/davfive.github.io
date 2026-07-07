@@ -6,7 +6,7 @@
 <title>Lesson 22 — Validation, Retry & Feedback Loops for Extraction Quality</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0022-validation-retry-and-feedback-loops-for-extraction-quality.html" data-domain="4" data-task-id="4.4" data-lesson-title="Validation, Retry &amp; Feedback Loops for Extraction Quality">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -38,11 +38,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      This distinguishes exactly the two failure types the guide separates: a sum mismatch is a semantic error retry-with-feedback can fix, while a genuinely absent tax ID is information retrying can't produce — nullable handling is the correct response there instead.
+      <span class="fb-text">This distinguishes exactly the two failure types the guide separates: a sum mismatch is a semantic error retry-with-feedback can fix, while a genuinely absent tax ID is information retrying can't produce — nullable handling is the correct response there instead.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      A generic retry prompt without the specific error wastes a retry cycle on the totals case and can't help at all with truly missing information. Routing everything to human review discards retries that would actually succeed on the fixable case. Raising temperature adds randomness without addressing either the specific math error or the field's genuine absence.
+      <span class="fb-text">A generic retry prompt without the specific error wastes a retry cycle on the totals case and can't help at all with truly missing information. Routing everything to human review discards retries that would actually succeed on the fixable case. Raising temperature adds randomness without addressing either the specific math error or the field's genuine absence.</span>
     </div>
   </div>
 

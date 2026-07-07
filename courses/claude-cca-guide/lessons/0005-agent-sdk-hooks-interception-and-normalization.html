@@ -6,7 +6,7 @@
 <title>Lesson 5 — Agent SDK Hooks: Interception & Normalization</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0005-agent-sdk-hooks-interception-and-normalization.html" data-domain="1" data-task-id="1.5" data-lesson-title="Agent SDK Hooks: Interception &amp; Normalization">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -38,11 +38,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      This is exactly the normalization use case for PostToolUse hooks: intercept tool results and transform them into one consistent format before the model has to reason about the discrepancy at all.
+      <span class="fb-text">This is exactly the normalization use case for PostToolUse hooks: intercept tool results and transform them into one consistent format before the model has to reason about the discrepancy at all.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      Asking for careful parsing and asking for double-checked math both push a data-quality problem onto the model's reasoning, which stays unreliable — the model can still misparse an ambiguous format. Restricting to one tool loses functionality just to dodge the problem instead of fixing it. Normalize at the boundary; don't push the burden onto the model.
+      <span class="fb-text">Asking for careful parsing and asking for double-checked math both push a data-quality problem onto the model's reasoning, which stays unreliable — the model can still misparse an ambiguous format. Restricting to one tool loses functionality just to dodge the problem instead of fixing it. Normalize at the boundary; don't push the burden onto the model.</span>
     </div>
   </div>
 

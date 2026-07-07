@@ -6,7 +6,7 @@
 <title>Lesson 12 — Selecting Built-in Tools (Read, Write, Edit, Bash, Grep, Glob)</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0012-selecting-builtin-tools-read-write-edit-bash-grep-glob.html" data-domain="2" data-task-id="2.5" data-lesson-title="Selecting Built-in Tools (Read, Write, Edit, Bash, Grep, Glob)">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -40,11 +40,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      This is the guide's tracing pattern for wrapper modules: first identify all exported names, including re-exports, then Grep for each one across the codebase — catching indirect usages a single search would miss.
+      <span class="fb-text">This is the guide's tracing pattern for wrapper modules: first identify all exported names, including re-exports, then Grep for each one across the codebase — catching indirect usages a single search would miss.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      Reading every file is exhaustive but doesn't scale, and manual scanning misses things a targeted search wouldn't. Glob only narrows by file type, not by actual usage — it doesn't locate anything by itself. Editing the definition and relying on outside IDE tooling assumes capabilities outside the agent and skips the actual investigation, likely missing re-exported call sites.
+      <span class="fb-text">Reading every file is exhaustive but doesn't scale, and manual scanning misses things a targeted search wouldn't. Glob only narrows by file type, not by actual usage — it doesn't locate anything by itself. Editing the definition and relying on outside IDE tooling assumes capabilities outside the agent and skips the actual investigation, likely missing re-exported call sites.</span>
     </div>
   </div>
 

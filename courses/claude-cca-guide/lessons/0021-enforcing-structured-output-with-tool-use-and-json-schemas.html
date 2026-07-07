@@ -6,7 +6,7 @@
 <title>Lesson 21 — Enforcing Structured Output with Tool Use & JSON Schemas</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0021-enforcing-structured-output-with-tool-use-and-json-schemas.html" data-domain="4" data-task-id="4.3" data-lesson-title="Enforcing Structured Output with Tool Use &amp; JSON Schemas">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -44,11 +44,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      This is the guide's exact prevention mechanism: a required field the model can't find gets fabricated to satisfy the schema — making the field optional/nullable removes that pressure entirely.
+      <span class="fb-text">This is the guide's exact prevention mechanism: a required field the model can't find gets fabricated to satisfy the schema — making the field optional/nullable removes that pressure entirely.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      Switching to "auto" risks losing structured output altogether rather than fixing the one problematic field. A prompt instruction is a soft patch on a structural incentive — the schema itself is still telling the model the field is required. A second validation pass can catch the fabrication after the fact but doesn't remove the incentive that caused it.
+      <span class="fb-text">Switching to "auto" risks losing structured output altogether rather than fixing the one problematic field. A prompt instruction is a soft patch on a structural incentive — the schema itself is still telling the model the field is required. A second validation pass can catch the fabrication after the fact but doesn't remove the incentive that caused it.</span>
     </div>
   </div>
 

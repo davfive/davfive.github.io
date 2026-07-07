@@ -237,10 +237,58 @@ blockquote {
   border-radius: 7px;
   margin-top: 0.4rem;
 }
-.quiz-feedback.correct { display: block; background: var(--good-bg); border-left: 3px solid var(--good); }
-.quiz-feedback.incorrect { display: block; background: var(--bad-bg); border-left: 3px solid var(--bad); }
+.quiz-feedback.correct { background: var(--good-bg); border-left: 3px solid var(--good); }
+.quiz-feedback.incorrect { background: var(--bad-bg); border-left: 3px solid var(--bad); }
 .quiz.answered .quiz-feedback.show { display: block; }
 
 .quiz-feedback .label { font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: 0.3rem; }
 .quiz-feedback.correct .label { color: var(--good); }
 .quiz-feedback.incorrect .label { color: var(--bad); }
+
+/* Results / progress panel (index.html) */
+.results-panel {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+.results-panel .lede-small {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+#results-summary table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin: 0.6rem 0 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+#results-summary th, #results-summary td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+#results-summary th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.results-actions {
+  display: flex;
+  gap: 0.7rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.results-actions button {
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+  background: #fff;
+  cursor: pointer;
+  color: var(--ink);
+}
+.results-actions button:hover { border-color: var(--accent); color: var(--accent); }
+#results-clear:hover { border-color: var(--bad); color: var(--bad); }

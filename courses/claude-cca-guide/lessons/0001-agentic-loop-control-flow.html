@@ -6,7 +6,7 @@
 <title>Lesson 1 — Agentic Loop Control Flow</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0001-agentic-loop-control-flow.html" data-domain="1" data-task-id="1.1" data-lesson-title="Agentic Loop Control Flow">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -72,11 +72,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      stop_reason is the API's structured signal for why generation stopped — "tool_use" means Claude wants to call a tool, "end_turn" means it's finished. Parsing phrases like "I have completed the task" is exactly the anti-pattern the guide names: text-based signals are fragile in both directions.
+      <span class="fb-text">stop_reason is the API's structured signal for why generation stopped — "tool_use" means Claude wants to call a tool, "end_turn" means it's finished. Parsing phrases like "I have completed the task" is exactly the anti-pattern the guide names: text-based signals are fragile in both directions.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      B (arbitrary iteration caps) is a named anti-pattern — it's a safety net, not a termination signal, and can cut work off early or let it run too long. C moves the same fragility into a schema field instead of removing it; the model can still omit or misreport it. D doesn't touch the root cause: the loop still isn't using the structured field the API already provides. The fix is always the same — check <code>stop_reason</code>.
+      <span class="fb-text">B (arbitrary iteration caps) is a named anti-pattern — it's a safety net, not a termination signal, and can cut work off early or let it run too long. C moves the same fragility into a schema field instead of removing it; the model can still omit or misreport it. D doesn't touch the root cause: the loop still isn't using the structured field the API already provides. The fix is always the same — check <code>stop_reason</code>.</span>
     </div>
   </div>
 
@@ -91,11 +91,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      The loop's memory <em>is</em> the conversation history sent with each request. Tool results have to be appended to it for the model to "remember" what it already found — rebuilding from scratch each turn throws that away, so repeats and contradictions are the expected outcome, not a prompting bug.
+      <span class="fb-text">The loop's memory <em>is</em> the conversation history sent with each request. Tool results have to be appended to it for the model to "remember" what it already found — rebuilding from scratch each turn throws that away, so repeats and contradictions are the expected outcome, not a prompting bug.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      B tries to fix a structural problem with an instruction — the model can't reason about information it was never given, no matter how the prompt is worded. C reduces symptoms, not the cause: even one tool's results still need to persist across turns. D adds an unneeded step; summarizing may help with context budget later, but the actual defect here is that results aren't in context <em>at all</em>. The fix is structural: append results to history.
+      <span class="fb-text">B tries to fix a structural problem with an instruction — the model can't reason about information it was never given, no matter how the prompt is worded. C reduces symptoms, not the cause: even one tool's results still need to persist across turns. D adds an unneeded step; summarizing may help with context budget later, but the actual defect here is that results aren't in context <em>at all</em>. The fix is structural: append results to history.</span>
     </div>
   </div>
 

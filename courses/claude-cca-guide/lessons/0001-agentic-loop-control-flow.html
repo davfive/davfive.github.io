@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1 — Agentic Loop Control Flow</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 1 · Task Statement 1.1</div>
+  <h1>Agentic Loop Control Flow</h1>
+  <p class="lede">The exam's precise vocabulary for something you already do every day — and the three anti-patterns it's designed to catch you on.</p>
+
+  <p>You already write agentic loops. This lesson isn't teaching you what one is — it's mapping your working knowledge onto the exact terms and failure modes the exam tests.</p>
+
+  <h2>The lifecycle, in exam terms</h2>
+  <p>Every agentic loop iteration has the same shape: send a request to Claude, inspect <code>stop_reason</code> on the response, act accordingly, repeat.</p>
+  <ul>
+    <li><code>stop_reason: "tool_use"</code> — Claude wants to call one or more tools. Execute them, append the results to conversation history, send another request.</li>
+    <li><code>stop_reason: "end_turn"</code> — Claude is done. Return the final response; stop looping.</li>
+  </ul>
+  <p>That's the entire control-flow decision. The exam frames this as the distinction between <strong>model-driven decision-making</strong> (Claude reasons about what to do next based on accumulated context) and <strong>pre-configured decision trees</strong> (you hard-code a fixed tool sequence). The loop's job is to faithfully execute whichever tool calls the model requests — not to second-guess or pre-route them.</p>
+
+  <pre><code>while True:
+    response = client.messages.create(..., tools=tools, messages=messages)
+    messages.append({"role": "assistant", "content": response.content})
+
+    if response.stop_reason == "tool_use":
+        results = [run_tool(block) for block in response.content if block.type == "tool_use"]
+        messages.append({"role": "user", "content": results})
+        continue  # loop again — model needs to see the results
+
+    if response.stop_reason == "end_turn":
+        break  # done</code></pre>
+
+  <h2>The three anti-patterns the exam is built around</h2>
+  <p>The Exam Guide names these explicitly. Every wrong answer on a Task 1.1 question is almost always one of these three, dressed up differently.</p>
+
+  <div class="anti-pattern">
+    <span class="label">Anti-pattern 1</span>
+    Parsing natural-language signals to decide when the loop should stop — e.g. checking whether the assistant's text contains "I'm done" or "task complete." Models phrase completion inconsistently. This produces both false stops (loop ends while tools were still needed) and false continues (loop keeps going after real completion).
+  </div>
+
+  <div class="anti-pattern">
+    <span class="label">Anti-pattern 2</span>
+    Setting an arbitrary iteration cap as the <em>primary</em> stopping mechanism. A cap is a reasonable safety net against runaway loops — but if it's doing the actual job of deciding when work is finished, you'll cut off legitimate multi-step work or let simple tasks run needlessly long.
+  </div>
+
+  <div class="anti-pattern">
+    <span class="label">Anti-pattern 3</span>
+    Treating the presence of assistant text content as a completion indicator. Claude can emit text <em>alongside</em> a tool call (e.g. "Let me check that for you" followed by a tool_use block) — text existing doesn't mean the turn is over. Only <code>stop_reason</code> tells you that.
+  </div>
+
+  <div class="correct-pattern">
+    <span class="label">The only reliable signal</span>
+    <code>stop_reason</code> is a structured field the API guarantees. Everything else — text content, phrasing, iteration count — is either unreliable or a secondary safety measure, never the primary mechanism.
+  </div>
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">Your agentic loop checks whether the assistant's response text contains the phrase "I have completed the task" to decide when to stop calling tools. In production, the loop sometimes terminates early even though tool calls were still pending, and sometimes keeps looping after the task is genuinely finished. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Check whether stop_reason equals end_turn instead of parsing assistant text for completion phrases.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Count loop iterations and stop once a fixed maximum has been reached, regardless of state.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Ask the model to output a JSON field named done before inspecting the response at all.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Switch to a shorter system prompt so completion phrasing becomes more consistent overall.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      stop_reason is the API's structured signal for why generation stopped — "tool_use" means Claude wants to call a tool, "end_turn" means it's finished. Parsing phrases like "I have completed the task" is exactly the anti-pattern the guide names: text-based signals are fragile in both directions.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      B (arbitrary iteration caps) is a named anti-pattern — it's a safety net, not a termination signal, and can cut work off early or let it run too long. C moves the same fragility into a schema field instead of removing it; the model can still omit or misreport it. D doesn't touch the root cause: the loop still isn't using the structured field the API already provides. The fix is always the same — check <code>stop_reason</code>.
+    </div>
+  </div>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">You're debugging an agent that, each turn, rebuilds its prompt from only the original user request — it never includes results from tools called in earlier turns. The agent frequently repeats the same tool call or contradicts findings from two turns earlier. What's the root cause?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Tool results must be appended to conversation history so the model can reason about them later.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">The system prompt should instruct the model to remember its previous tool calls more carefully.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">The loop should reduce the number of available tools so fewer results need to be tracked.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">The model should summarize each tool result into one sentence before the next iteration starts.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      The loop's memory <em>is</em> the conversation history sent with each request. Tool results have to be appended to it for the model to "remember" what it already found — rebuilding from scratch each turn throws that away, so repeats and contradictions are the expected outcome, not a prompting bug.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      B tries to fix a structural problem with an instruction — the model can't reason about information it was never given, no matter how the prompt is worded. C reduces symptoms, not the cause: even one tool's results still need to persist across turns. D adds an unneeded step; summarizing may help with context budget later, but the actual defect here is that results aren't in context <em>at all</em>. The fix is structural: append results to history.
+    </div>
+  </div>
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 1, Task Statement 1.1 (Knowledge of / Skills in bullets). <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  <p class="source-tag">Secondary: Anthropic's developer docs (docs.claude.com) for the exact <code>stop_reason</code> values and message-format details if you want to double check syntax.</p>
+
+  <div class="ask-followup">Something here not match how your own agent actually behaves? Ask — that mismatch is usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <span>← Domain 1 · Task 1.1</span>
+    <a href="0002-coordinator-subagent-architecture.html">Next: Task 1.2 — Coordinator-Subagent Architecture →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference — Domain 2: Tool Design & MCP Integration</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .page { max-width: 640px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.8rem 0 1.6rem; }
+  th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  @media print {
+    body { padding: 0.5in; font-size: 13px; }
+    .ask-followup, .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Reference · Domain 2 (18% of exam)</div>
+  <h1>Tool Design & MCP Integration</h1>
+  <p class="lede">Print-friendly compression of all 5 Task Statements in this domain.</p>
+
+  <h2>2.1 — Effective tool interfaces</h2>
+  <ul>
+    <li>Tool descriptions are the model's primary selection signal — include input formats, examples, and explicit boundaries vs. similar tools.</li>
+    <li>Fixes beyond wording: rename/re-describe, or split an overly generic tool into purpose-specific ones.</li>
+  </ul>
+
+  <h2>2.2 — Structured error responses</h2>
+  <ul>
+    <li>Four categories: transient, validation, business, permission. Uniform "failed" text collapses all of them.</li>
+    <li>Return <code>errorCategory</code>, <code>isRetryable</code>, and a human-readable description.</li>
+    <li>Access failure (timeout) ≠ valid empty result — don't conflate them.</li>
+  </ul>
+
+  <h2>2.3 — Tool distribution &amp; tool_choice</h2>
+  <ul>
+    <li>Fewer, role-scoped tools beat broad access — over-provisioned agents misuse tools outside their specialty.</li>
+    <li><code>tool_choice</code>: <code>"auto"</code> (may skip) &middot; <code>"any"</code> (must call, picks which) &middot; forced (must call this one).</li>
+  </ul>
+
+  <h2>2.4 — MCP servers in Claude Code</h2>
+  <ul>
+    <li>Project-scoped <code>.mcp.json</code> (shared, version-controlled) vs. user-scoped <code>~/.claude.json</code> (personal/experimental).</li>
+    <li>Prefer existing community servers over custom builds for standard integrations.</li>
+    <li>MCP resources expose catalogs directly, cutting exploratory tool calls.</li>
+  </ul>
+
+  <h2>2.5 — Built-in tools</h2>
+  <table>
+    <tr><th>Tool</th><th>Best for</th></tr>
+    <tr><td>Grep</td><td>Content search inside files</td></tr>
+    <tr><td>Glob</td><td>File path/name pattern matching</td></tr>
+    <tr><td>Read / Write</td><td>Full file operations</td></tr>
+    <tr><td>Edit</td><td>Targeted change via unique text match; fall back to Read+Write if not unique</td></tr>
+  </table>
+  <div class="correct-pattern"><span class="label">Wrapper-tracing pattern</span>Find all exported/re-exported names first, then Grep each one — a single direct-name search misses wrapped usages.</div>
+
+  <h2>Glossary (Domain 2)</h2>
+  <p><strong>isError</strong>: MCP's tool-failure flag — needs structured category info alongside it to be useful.<br>
+  <strong>tool_choice forced selection</strong>: <code>{"type": "tool", "name": "..."}</code>, guarantees a specific tool runs.<br>
+  <strong>Scoped tool access</strong>: giving each agent only the tools its role actually needs.</p>
+
+  <div class="nav-links">
+    <a href="0012-selecting-builtin-tools-read-write-edit-bash-grep-glob.html">← Task 2.5 — Selecting Built-in Tools (Read, Write, Edit, Bash, Grep, Glob)</a>
+    <a href="0013-claudemd-hierarchy-scoping-and-modular-organization.html">Domain 3: Claude Code Configuration & Workflows →</a>
+  </div>
+
+</div>
+</body>
+</html>

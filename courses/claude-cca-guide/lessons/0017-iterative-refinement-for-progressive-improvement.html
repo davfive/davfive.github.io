@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 17 — Iterative Refinement for Progressive Improvement</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 3 · Task Statement 3.5</div>
+  <h1>Iterative Refinement for Progressive Improvement</h1>
+  <p class="lede">When prose descriptions produce inconsistent results, the fix usually isn't more prose.</p>
+
+
+  <h2>Four techniques</h2>
+  <ul>
+    <li><strong>Concrete examples</strong> — when a prose description of a transformation is interpreted inconsistently, 2-3 concrete input/output examples communicate the expected behavior far more reliably than more adjectives would.</li>
+    <li><strong>Test-driven iteration</strong> — write the test suite (expected behavior, edge cases, performance requirements) before implementation, then iterate by sharing test failures back to guide progressive correction.</li>
+    <li><strong>The interview pattern</strong> — have Claude ask clarifying questions first, surfacing considerations (cache invalidation strategy, failure modes) the developer hadn't yet thought through, before any implementation begins.</li>
+    <li><strong>Batching related fixes</strong> — when multiple issues interact, describe them together in one detailed message; when they're independent, fix them sequentially instead.</li>
+  </ul>
+  <div class="anti-pattern">
+    <span class="label">Common miss</span>
+    Treating "the description was ambiguous" as a signal to write a longer, more detailed paragraph — rather than switching to concrete input/output examples, which resolve ambiguity more directly than prose ever can.
+  </div>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">You've asked Claude to "handle null values sensibly" in a data migration script, but each run interprets "sensibly" differently — sometimes skipping the row, sometimes defaulting to zero, sometimes throwing. What's the most effective next step?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Provide 2-3 concrete input/output examples showing exactly what should happen for specific null cases.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Rewrite the instruction with more detailed prose explaining what "sensibly" is intended to mean.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Accept the first run's behavior as the standard and document it after the fact for future reference.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Split the null-handling logic into five separate prompts, one for each field that might contain nulls.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the named fix for exactly this symptom: when prose produces inconsistent interpretation, concrete input/output examples resolve the ambiguity directly, in a way more prose reliably fails to.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      More prose is the instinct the guide specifically calls out as ineffective here — it was already prose that produced the inconsistency. Accepting whatever the first run did skips fixing the actual ambiguity. Splitting into five separate prompts adds overhead without addressing that the core instruction itself is underspecified.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 3, Task Statement 3.5. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0016-plan-mode-vs-direct-execution.html">← Task 3.4 — Plan Mode vs. Direct Execution</a>
+    <a href="0018-integrating-claude-code-into-ci-cd-pipelines.html">Next: Task 3.6 — Integrating Claude Code into CI/CD Pipelines →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

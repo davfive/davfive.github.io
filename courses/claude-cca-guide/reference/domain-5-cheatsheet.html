@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference — Domain 5: Context Management & Reliability</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .page { max-width: 640px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.8rem 0 1.6rem; }
+  th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  @media print {
+    body { padding: 0.5in; font-size: 13px; }
+    .ask-followup, .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Reference · Domain 5 (15% of exam)</div>
+  <h1>Context Management & Reliability</h1>
+  <p class="lede">Print-friendly compression of all 6 Task Statements in this domain.</p>
+
+  <h2>5.1 — Preserving context over long interactions</h2>
+  <ul>
+    <li>Progressive summarization blurs numbers, dates, and stated expectations unless pulled into a persistent "case facts" block.</li>
+    <li>"Lost in the middle": models attend reliably to start/end, not necessarily the middle of long inputs.</li>
+  </ul>
+
+  <h2>5.2 — Escalation &amp; ambiguity resolution</h2>
+  <ul>
+    <li>Real triggers: explicit human request, genuine policy gap, real inability to progress. Not reliable: sentiment, self-reported confidence.</li>
+    <li>Multiple record matches → ask for another identifier, never guess heuristically.</li>
+  </ul>
+
+  <h2>5.3 — Error propagation across multi-agent systems</h2>
+  <ul>
+    <li>Report failure type + what was attempted + partial results + alternatives — not a generic status.</li>
+    <li>Access failure (timeout) ≠ valid empty result. Don't suppress errors silently or kill the whole workflow on one failure.</li>
+  </ul>
+
+  <h2>5.4 — Context in large codebase exploration</h2>
+  <ul>
+    <li>Long sessions degrade to generic "typical pattern" answers — externalize memory via scratchpad files.</li>
+    <li>Crash recovery: agents export state to a manifest; coordinator reloads and injects it on resume.</li>
+  </ul>
+
+  <h2>5.5 — Human review &amp; confidence calibration</h2>
+  <ul>
+    <li>Aggregate accuracy (e.g. 97%) can mask a specific document type or field performing much worse.</li>
+    <li>Stratified sampling of high-confidence extractions + field-level calibrated confidence scores route review attention correctly.</li>
+  </ul>
+
+  <h2>5.6 — Provenance &amp; uncertainty in synthesis</h2>
+  <ul>
+    <li>Preserve structured claim-source mappings through every synthesis stage.</li>
+    <li>Conflicting sources: annotate both values with attribution — never silently pick one or average them.</li>
+    <li>Always carry publication/collection dates so temporal differences aren't mistaken for contradictions.</li>
+  </ul>
+
+  <div class="correct-pattern"><span class="label">Cross-cutting rule</span>Structure beats compression whenever a downstream reader (human or coordinator) needs to make a real decision — collapse only what's genuinely safe to lose.</div>
+
+  <h2>Glossary (Domain 5)</h2>
+  <p><strong>Lost in the middle</strong>: models attending reliably to the start/end of long inputs while dropping mid-document findings.<br>
+  <strong>Case facts block</strong>: persistent, non-summarized record of transactional facts carried in every prompt.<br>
+  <strong>Coverage annotation</strong>: synthesis metadata distinguishing well-supported findings from gaps.</p>
+
+  <div class="nav-links">
+    <a href="0030-information-provenance-and-uncertainty-in-multisource-synthesis.html">← Task 5.6 — Information Provenance & Uncertainty in Multi-Source Synthesis</a>
+    <a href="../index.html">Course index →</a>
+  </div>
+
+</div>
+</body>
+</html>

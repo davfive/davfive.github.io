@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 11 — Integrating MCP Servers into Claude Code Workflows</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 2 · Task Statement 2.4</div>
+  <h1>Integrating MCP Servers into Claude Code Workflows</h1>
+  <p class="lede">Where a server is scoped, and whether it's custom-built, are both deliberate decisions — not defaults.</p>
+
+
+  <h2>Two scopes, two purposes</h2>
+  <p>Project-level <code>.mcp.json</code> is for shared team tooling, committed to version control so everyone gets the same servers. User-level <code>~/.claude.json</code> is for personal or experimental servers that shouldn't be forced on teammates. Environment variable expansion (<code>${GITHUB_TOKEN}</code>) inside <code>.mcp.json</code> keeps credentials out of committed config entirely.</p>
+  <p>Tools from every configured server are discovered at connection time and made simultaneously available — which is exactly why scoping and tool distribution (previous lesson) both matter here too.</p>
+
+  <h2>Build vs. adopt</h2>
+  <p>Prefer existing, actively-maintained community MCP servers for standard integrations (Jira, for instance) over building your own. Reserve custom server development for genuinely team-specific workflows that no existing server covers.</p>
+
+  <h2>Resources cut down exploratory calls</h2>
+  <p>MCP resources expose content catalogs — issue summaries, documentation hierarchies, database schemas — directly, so the agent has visibility into what's available without needing exploratory tool calls just to find out what exists. Related: enhance MCP tool descriptions enough that the agent doesn't default to a weaker built-in tool (like Grep) when a more capable MCP tool is actually the better choice.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">Your team built a custom MCP server for Jira integration, duplicating functionality an actively maintained community Jira MCP server already provides. Meanwhile, a teammate commits their personal experimental weather-API MCP server config directly into the shared project .mcp.json. What are the two changes that best align with recommended practice?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Adopt the community Jira server instead of the custom one, and move the experimental server to user-scoped config.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Keep the custom Jira server for full control, and leave the experimental server in the shared project config.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Merge the custom Jira server and the experimental server into a single combined MCP server for simplicity.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Remove both servers and rebuild all integrations from scratch using only officially documented tools.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      The guidance here is specific: prefer existing community servers over custom builds for standard integrations like Jira, and personal/experimental servers belong in user-scoped ~/.claude.json, not the shared project file everyone pulls.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Keeping the custom Jira server retains unnecessary duplicated maintenance, and leaving an experimental tool in shared config puts it in front of the whole team unnecessarily. Merging two unrelated servers muddies scoping further for no real benefit. Rebuilding everything from scratch is a drastic overcorrection — nothing is wrong with MCP servers generally, just these two specific placement choices.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 2, Task Statement 2.4. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0010-tool-distribution-and-toolchoice-configuration.html">← Task 2.3 — Tool Distribution & tool_choice Configuration</a>
+    <a href="0012-selecting-builtin-tools-read-write-edit-bash-grep-glob.html">Next: Task 2.5 — Selecting Built-in Tools (Read, Write, Edit, Bash, Grep, Glob) →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

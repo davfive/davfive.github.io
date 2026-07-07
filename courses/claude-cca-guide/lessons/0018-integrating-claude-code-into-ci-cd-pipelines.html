@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 18 — Integrating Claude Code into CI/CD Pipelines</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 3 · Task Statement 3.6</div>
+  <h1>Integrating Claude Code into CI/CD Pipelines</h1>
+  <p class="lede">CI needs Claude Code to behave like a script: non-interactive, structured output, and no illusions about self-review.</p>
+
+
+  <h2>Non-interactive, structured, pipeline-safe</h2>
+  <ul>
+    <li><code>-p</code> / <code>--print</code> — runs Claude Code in non-interactive mode, preventing a pipeline from hanging on input it will never receive.</li>
+    <li><code>--output-format json</code> with <code>--json-schema</code> — enforces machine-parseable structured output, so findings can be posted programmatically as inline PR comments rather than parsed out of prose.</li>
+    <li><strong>CLAUDE.md</strong> — the same mechanism used interactively also gives CI-invoked runs project context: testing standards, fixture conventions, review criteria.</li>
+  </ul>
+  <div class="callout">
+    <span class="label">Session isolation for review</span>
+    A Claude session that just generated code retains the reasoning context behind its own decisions — which makes it structurally less likely to question those decisions in a self-review pass. An independent review instance, without that generation context, is more effective at catching subtle issues (this connects directly to Task 4.6).
+  </div>
+  <h2>Reducing noise on repeat runs</h2>
+  <p>When re-running reviews after new commits, include prior review findings in context and instruct Claude to report only new or still-unaddressed issues — otherwise every re-run re-flags what's already been discussed. Similarly, providing existing test files in context prevents test-generation runs from suggesting scenarios the suite already covers, and documenting testing standards and available fixtures in CLAUDE.md improves generation quality directly.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">You wire Claude Code into a CI pipeline to review pull requests and post inline comments automatically. On the second commit to a PR, it re-posts comments about issues already flagged (and left unaddressed) on the first commit, cluttering the review. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Include the prior review's findings in context and instruct Claude to report only new or unaddressed issues.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Switch the review from a structured JSON schema to free-text output so comments read more naturally.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Have the same session that generated the code also perform the review, since it has full context already.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Disable review comments entirely after the first commit and only run it once per pull request.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the guide's stated fix: giving the review run visibility into prior findings and instructing it to report only what's new avoids duplicate comments on unaddressed issues across commits.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Switching away from structured output makes automated posting harder, not the duplicate-comment problem better. Having the generating session review its own code runs into the self-review limitation directly — it's less likely to question its own reasoning. Disabling review after the first commit loses legitimate value from catching new issues introduced in later commits.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 3, Task Statement 3.6. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0017-iterative-refinement-for-progressive-improvement.html">← Task 3.5 — Iterative Refinement for Progressive Improvement</a>
+    <a href="../reference/domain-3-cheatsheet.html">Domain 3 cheat sheet →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

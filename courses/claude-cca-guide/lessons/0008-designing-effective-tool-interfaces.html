@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 8 — Designing Effective Tool Interfaces</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 2 · Task Statement 2.1</div>
+  <h1>Designing Effective Tool Interfaces</h1>
+  <p class="lede">The model picks a tool almost entirely based on its description. Treat the description as the interface.</p>
+
+
+  <h2>Descriptions are the selection mechanism</h2>
+  <p>Tool descriptions are the primary signal an LLM uses to decide which tool to call. Minimal descriptions ("Retrieves order details") lead to unreliable selection whenever a similar tool exists nearby. Good descriptions include input formats, example queries, edge cases, and explicit boundaries: not just what the tool does, but when to use it <em>instead of</em> the similar-looking alternative.</p>
+
+  <div class="anti-pattern">
+    <span class="label">The classic failure</span>
+    Two tools with near-identical descriptions — <code>analyze_content</code> and <code>analyze_document</code> — cause consistent misrouting. Neither description tells the model what distinguishes them.
+  </div>
+
+  <h2>Two fixes beyond better wording</h2>
+  <p>Sometimes the right fix is renaming and re-describing (turn <code>analyze_content</code> into <code>extract_web_results</code> with a web-specific description). Sometimes it's splitting an overly generic tool into purpose-specific ones with defined input/output contracts — <code>analyze_document</code> becomes <code>extract_data_points</code>, <code>summarize_content</code>, and <code>verify_claim_against_source</code>, each unambiguous on its own.</p>
+  <p>One more failure mode worth knowing: system prompt wording can be keyword-sensitive enough to override a perfectly good tool description, creating unintended associations you didn't design for. Worth checking when tool selection looks wrong despite descriptions that read fine in isolation.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">Your agent has two MCP tools: fetch_invoice ("Retrieves invoice information") and fetch_payment ("Retrieves payment details"). When users ask "why was I charged $49.99 last month," the agent inconsistently calls one, the other, both, or neither correctly. What's the most effective first step?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Expand each tool's description with input formats, example queries, and explicit boundaries versus the other.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Add several few-shot examples showing which tool to call for various types of billing questions.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Merge both tools into a single get_billing_info tool that accepts any billing-related identifier.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Add a routing step that scans user messages for keywords before either tool becomes available.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      Tool descriptions are the model's primary selection signal. Minimal, overlapping descriptions are the root cause here — expanding them with concrete boundaries is the lowest-effort, highest-leverage fix, and it's the guide's stated first step.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Few-shot examples add real value eventually, but they treat a symptom (inconsistent selection) rather than the root cause (vague descriptions), and add token overhead before the cheaper fix has been tried. Merging the tools is a legitimate architectural option, but it skips past the low-effort fix that should come first. A keyword-based routing step reintroduces a rigid pre-classifier that bypasses the model's own language understanding — over-engineered as a first step.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 2, Task Statement 2.1. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="../reference/domain-1-cheatsheet.html">← Domain 1 cheat sheet</a>
+    <a href="0009-structured-error-responses-for-mcp-tools.html">Next: Task 2.2 — Structured Error Responses for MCP Tools →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

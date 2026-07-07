@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 30 — Information Provenance & Uncertainty in Multi-Source Synthesis</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 5 · Task Statement 5.6</div>
+  <h1>Information Provenance & Uncertainty in Multi-Source Synthesis</h1>
+  <p class="lede">When two credible sources disagree, picking one and moving on is the failure — not a shortcut.</p>
+
+
+  <h2>Provenance gets lost in compression</h2>
+  <p>Summarization steps routinely drop source attribution unless claim-source mappings are explicitly preserved and carried through each stage of synthesis. Requiring subagents to output structured mappings (source URLs, document names, relevant excerpts) — and requiring downstream agents to preserve rather than discard them — keeps a claim traceable back to where it came from.</p>
+  <div class="anti-pattern">
+    <span class="label">Don't silently pick a winner</span>
+    When credible sources report conflicting statistics, arbitrarily selecting one value and presenting it as settled is a named failure. The correct move is annotating the conflict with source attribution for both values, letting the coordinator (or the reader) see the disagreement rather than hiding it.
+  </div>
+  <h2>Temporal data and format-appropriate presentation</h2>
+  <p>Requiring publication or data-collection dates in structured outputs prevents a values-changed-over-time situation from being misread as a contradiction between sources. And synthesis output should render different content types the way they actually read best — financial data as tables, news as prose, technical findings as structured lists — rather than flattening everything into one uniform format for consistency's sake.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A multi-source research synthesis reports a single unemployment rate figure as fact, without noting that two of the three sources it drew from reported different values, and without noting the collection dates differ by six months. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Annotate the conflicting values with their source attribution and include each source's collection date.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Report only the figure from the source considered most authoritative, and omit the other two entirely.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Average the three reported figures together and present the average as the single unemployment rate.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Remove the unemployment statistic from the report entirely, since the sources don't fully agree.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the guide's stated correct behavior: annotate conflicting values with their sources rather than silently resolving them, and include collection dates so a real six-month gap isn't mistaken for a contradiction between otherwise-agreeing sources.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Picking the "most authoritative" source silently discards information the reader might reasonably want to see. Averaging manufactures a number none of the sources actually reported, and treats what may be a temporal difference as pure disagreement. Removing the statistic entirely throws away real information rather than presenting it responsibly with proper context.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 5, Task Statement 5.6. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0029-human-review-workflows-and-confidence-calibration.html">← Task 5.5 — Human Review Workflows & Confidence Calibration</a>
+    <a href="../reference/domain-5-cheatsheet.html">Domain 5 cheat sheet →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

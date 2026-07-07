@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 25 — Preserving Critical Information Across Long Interactions</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 5 · Task Statement 5.1</div>
+  <h1>Preserving Critical Information Across Long Interactions</h1>
+  <p class="lede">Summarization is lossy by design. The question is what you let it lose.</p>
+
+
+  <h2>What progressive summarization quietly drops</h2>
+  <p>Condensing a long conversation into a summary is necessary, but doing it naively tends to blur exactly the details that matter most: numerical values, percentages, dates, and customer-stated expectations get smoothed into vague paraphrase. Separately, the "lost in the middle" effect means models reliably attend to the beginning and end of long inputs, but can quietly drop findings buried in the middle.</p>
+  <div class="callout">
+    <span class="label">Tool output bloat</span>
+    A single order lookup might return 40+ fields when only 5 are actually relevant to the conversation. Left unfiltered, that noise accumulates in context across many tool calls, consuming token budget disproportionately to its value.
+  </div>
+  <h2>The fix pattern</h2>
+  <p>Extract the transactional facts that actually matter (amounts, dates, order numbers, statuses) into a persistent "case facts" block carried in every prompt, kept outside the summarized/compressible history — so it can't be blurred away. Trim verbose tool output down to only the relevant fields before it accumulates. When aggregating results from multiple sources, put key findings up front (not buried mid-document) and use explicit section headers to counteract the middle-attention effect. And have subagents attach real metadata (dates, sources, methodology) to their structured outputs, so downstream synthesis has what it needs without re-deriving it.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A customer support agent has been in a long conversation with a customer. Midway through, it summarizes the conversation so far to save context, and afterward it can no longer recall the exact refund amount ($47.32) the customer was promised three turns earlier — it now just says "a refund." What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Extract transactional facts like the exact refund amount into a persistent case-facts block outside the summarized history.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Increase the model's context window so summarization is no longer necessary at any point in the conversation.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Instruct the model to write longer, more detailed summaries covering everything discussed so far.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Ask the customer to restate the promised refund amount whenever the agent seems to have lost track of it.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is exactly the guide's named fix: numeric and transactional facts get blurred by progressive summarization, so pulling them into a separate persistent block outside the summarized text protects them from that lossy compression.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      A bigger window delays the problem but doesn't solve it for genuinely long conversations, and doesn't address that even a full context can suffer the lost-in-the-middle effect. Longer summaries still summarize — the instruction doesn't guarantee specific numbers survive the compression. Asking the customer to repeat information already given is a poor experience and treats a fixable system limitation as the customer's problem.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 5, Task Statement 5.1. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="../reference/domain-4-cheatsheet.html">← Domain 4 cheat sheet</a>
+    <a href="0026-escalation-and-ambiguity-resolution-patterns.html">Next: Task 5.2 — Escalation & Ambiguity Resolution Patterns →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

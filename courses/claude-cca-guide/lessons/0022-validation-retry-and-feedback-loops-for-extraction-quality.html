@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 22 — Validation, Retry & Feedback Loops for Extraction Quality</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 4 · Task Statement 4.4</div>
+  <h1>Validation, Retry & Feedback Loops for Extraction Quality</h1>
+  <p class="lede">Retries fix format problems. They cannot fix information that was never there.</p>
+
+
+  <h2>Retry-with-error-feedback</h2>
+  <p>When a semantic validation error is caught (values don't sum, a field holds the wrong type of data), the effective retry pattern appends the specific error to the prompt and asks the model to self-correct — including the original document, the failed extraction, and the exact validation error, so the model has everything it needs to fix the specific problem rather than guess.</p>
+  <div class="anti-pattern">
+    <span class="label">Know when retry can't help</span>
+    If required information is simply absent from the source document, no amount of retrying produces it — that's a genuinely different failure than a format or structural error, and needs a different response (flag for review, mark null) rather than another retry cycle.
+  </div>
+  <h2>Building a feedback loop, not just a retry</h2>
+  <p>Add a <code>detected_pattern</code> field to structured findings so that when developers dismiss a finding, you can systematically analyze which code constructs are triggering false positives. For numeric extraction specifically: extract both a <code>calculated_total</code> and the document's <code>stated_total</code> to flag discrepancies automatically, and add a <code>conflict_detected</code> boolean when source data is internally inconsistent.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">An invoice extraction pipeline occasionally returns a stated_total that doesn't match the sum of line items. Separately, some invoices are missing a required customer tax ID entirely because the field simply isn't present on that invoice template. Which approach correctly handles both cases?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Retry with the specific sum-mismatch error for the totals case; mark tax ID null rather than retrying for the missing case.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Retry both cases up to three times each with the same generic "please recheck your extraction" prompt.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Treat both as the same category of error and route both to human review without attempting any retry.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Increase model temperature on retry so a different total and tax ID are more likely to be generated.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This distinguishes exactly the two failure types the guide separates: a sum mismatch is a semantic error retry-with-feedback can fix, while a genuinely absent tax ID is information retrying can't produce — nullable handling is the correct response there instead.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      A generic retry prompt without the specific error wastes a retry cycle on the totals case and can't help at all with truly missing information. Routing everything to human review discards retries that would actually succeed on the fixable case. Raising temperature adds randomness without addressing either the specific math error or the field's genuine absence.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 4, Task Statement 4.4. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0021-enforcing-structured-output-with-tool-use-and-json-schemas.html">← Task 4.3 — Enforcing Structured Output with Tool Use & JSON Schemas</a>
+    <a href="0023-efficient-batch-processing-strategies.html">Next: Task 4.5 — Efficient Batch Processing Strategies →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

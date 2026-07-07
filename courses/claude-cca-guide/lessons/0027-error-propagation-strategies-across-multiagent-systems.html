@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 27 — Error Propagation Strategies Across Multi-Agent Systems</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 5 · Task Statement 5.3</div>
+  <h1>Error Propagation Strategies Across Multi-Agent Systems</h1>
+  <p class="lede">What a coordinator can do with a failure depends entirely on how much context that failure carries with it.</p>
+
+
+  <h2>Structured error context enables real decisions</h2>
+  <p>A subagent reporting a failure should include: the failure type, what was actually attempted, any partial results already obtained, and potential alternative approaches. That's what lets a coordinator make an intelligent recovery decision instead of guessing.</p>
+  <div class="callout">
+    <span class="label">Access failure vs. valid empty result</span>
+    A timeout (access failure, needs a retry decision) and a successful query that legitimately found nothing (valid empty result) are not the same thing and shouldn't be reported the same way — conflating them is a recurring bug class (see also Task 2.2).
+  </div>
+  <h2>Two named anti-patterns</h2>
+  <p>Silently suppressing an error by returning empty results as if they were a success hides a real failure from the coordinator. Terminating the entire workflow on a single subagent failure is the opposite overcorrection — it throws away everything that did succeed. The better pattern: subagents attempt local recovery for transient failures themselves, and only propagate upward what they genuinely can't resolve, along with what was attempted and any partial results. Synthesis output should carry coverage annotations distinguishing well-supported findings from areas with real gaps due to unavailable sources.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">In a multi-agent research pipeline, one subagent's web search for a specific subtopic times out. The subagent returns an empty result set with no further detail, indistinguishable from a successful search that simply found no relevant results. The coordinator proceeds as if that subtopic has no available information. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Have the subagent report structured error context distinguishing a timeout from a genuine empty result, with what was attempted.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Terminate the entire pipeline whenever any single subagent search fails, to avoid presenting incomplete findings.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Have the coordinator re-run the entire pipeline from scratch whenever any subagent returns zero results.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Instruct subagents to always return at least one result, even a low-relevance one, to avoid empty result sets.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the exact conflation the guide flags as a bug: an access failure (timeout) and a valid empty result look identical without structured context, and that difference is exactly what the coordinator needs to decide whether to retry.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Terminating the whole pipeline over one subagent's failure is the named overcorrection anti-pattern — it discards everything that succeeded elsewhere. Re-running everything from scratch is wasteful when only one subtopic actually failed. Forcing a low-relevance result to avoid "empty" output actively hides the real problem rather than surfacing it.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 5, Task Statement 5.3. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0026-escalation-and-ambiguity-resolution-patterns.html">← Task 5.2 — Escalation & Ambiguity Resolution Patterns</a>
+    <a href="0028-managing-context-in-large-codebase-exploration.html">Next: Task 5.4 — Managing Context in Large Codebase Exploration →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

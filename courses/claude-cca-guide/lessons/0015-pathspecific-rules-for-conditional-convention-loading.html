@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 15 — Path-Specific Rules for Conditional Convention Loading</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 3 · Task Statement 3.3</div>
+  <h1>Path-Specific Rules for Conditional Convention Loading</h1>
+  <p class="lede">Some conventions don't map to a directory — they map to a file pattern. Rules with glob scoping handle that case.</p>
+
+
+  <h2>The mechanism</h2>
+  <p><code>.claude/rules/</code> files can carry YAML frontmatter with a <code>paths</code> field containing glob patterns — e.g. <code>paths: ["terraform/**/*"]</code>. The rule only loads into context when Claude is actually editing a matching file, keeping irrelevant conventions (and their token cost) out of sessions that don't touch that area.</p>
+  <div class="correct-pattern">
+    <span class="label">Why glob beats directory-level CLAUDE.md here</span>
+    Some conventions span files scattered across the whole codebase — test files, for instance, live throughout the tree, not in one subdirectory. A glob like <code>**/*.test.tsx</code> catches every one of them regardless of location; a directory-level CLAUDE.md structurally can't.
+  </div>
+  <p>Rule of thumb: reach for path-specific rules when the convention is defined by file <em>type</em>, and directory-level CLAUDE.md when the convention is defined by file <em>location</em>.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">Your team has strict conventions for all *.test.tsx files — consistent mocking patterns, no snapshot tests, required cleanup in afterEach — but these test files are scattered across dozens of unrelated directories throughout the codebase. What's the most effective way to enforce this?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Create a .claude/rules/ file with paths: ["**/*.test.tsx"] so it loads for any matching file regardless of location.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Write a directory-level CLAUDE.md in each directory that happens to contain test files.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Add the testing conventions to the root-level project CLAUDE.md so every session loads them.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Create a custom slash command that developers run manually before writing any test file.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is exactly the guide's stated advantage of path-specific rules: a glob pattern like **/*.test.tsx applies by file type wherever the file lives, which directory-scoped CLAUDE.md structurally cannot do without duplicating the file in every directory.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Directory-level CLAUDE.md files would need to be duplicated across every directory containing a test file — brittle and easy to miss one. Loading the conventions into the root CLAUDE.md means every session pays the token cost even when no test files are being touched. A manual slash command depends on the developer remembering to invoke it, defeating the point of automatic conditional loading.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 3, Task Statement 3.3. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0014-custom-slash-commands-and-skills-configuration.html">← Task 3.2 — Custom Slash Commands & Skills Configuration</a>
+    <a href="0016-plan-mode-vs-direct-execution.html">Next: Task 3.4 — Plan Mode vs. Direct Execution →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

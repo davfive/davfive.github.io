@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 26 — Escalation & Ambiguity Resolution Patterns</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 5 · Task Statement 5.2</div>
+  <h1>Escalation & Ambiguity Resolution Patterns</h1>
+  <p class="lede">Escalate on the right triggers — not on how complicated or emotionally charged the case merely feels.</p>
+
+
+  <h2>Real triggers vs. unreliable proxies</h2>
+  <p>Legitimate escalation triggers: an explicit customer request for a human, a genuine policy exception or gap (not just a complex-seeming case), or a real inability to make further progress. Notably unreliable as escalation signals: sentiment analysis (frustration doesn't necessarily mean the case needs a human) and the model's own self-reported confidence score — neither reliably tracks actual case complexity.</p>
+  <div class="anti-pattern">
+    <span class="label">Two ways to get this wrong in opposite directions</span>
+    Escalating immediately just because a customer sounds upset, when the issue is actually within the agent's capability to resolve — versus not escalating when a customer has explicitly asked for a human, and continuing to investigate instead of honoring that request right away.
+  </div>
+  <h2>Handling ambiguity without guessing</h2>
+  <p>When policy is silent or ambiguous on a specific request (e.g., a competitor price-match request when policy only covers own-site price adjustments), escalate rather than improvise an answer. When a tool lookup returns multiple matching customer records, ask for an additional identifying detail rather than heuristically picking one — a wrong guess here has real consequences.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A customer explicitly says, "I want to speak to a human about this," but the issue described sounds straightforward and likely resolvable by the agent. What's the most appropriate response?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Honor the explicit request and escalate to a human immediately, without first attempting to resolve it.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Acknowledge the request but attempt to resolve the issue first, escalating only if it turns out to be complex.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Ignore the request since the underlying issue is within the agent's capability to resolve on its own.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Ask the customer to confirm they really want a human before proceeding either way.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      The guide draws this distinction directly: an explicit request for a human should be honored immediately, distinct from the case where the agent offers to resolve first because the customer hasn't asked to escalate.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Attempting resolution first is the correct approach only when the customer hasn't explicitly asked for a human — here they have. Ignoring an explicit request outright disregards stated customer preference entirely. Asking them to confirm adds unnecessary friction to a preference they've already stated clearly.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 5, Task Statement 5.2. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0025-preserving-critical-information-across-long-interactions.html">← Task 5.1 — Preserving Critical Information Across Long Interactions</a>
+    <a href="0027-error-propagation-strategies-across-multiagent-systems.html">Next: Task 5.3 — Error Propagation Strategies Across Multi-Agent Systems →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

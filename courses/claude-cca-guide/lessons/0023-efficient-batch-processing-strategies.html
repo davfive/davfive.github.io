@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 23 — Efficient Batch Processing Strategies</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 4 · Task Statement 4.5</div>
+  <h1>Efficient Batch Processing Strategies</h1>
+  <p class="lede">Batch API trades latency guarantees for a real cost cut — the right call depends entirely on your SLA.</p>
+
+
+  <h2>What the Message Batches API offers</h2>
+  <p>50% cost savings, processing within an up-to-24-hour window, and no guaranteed latency SLA. It fits non-blocking, latency-tolerant workloads well: overnight reports, weekly audits, nightly test generation. It does not fit blocking workflows like pre-merge checks, where a developer is waiting on the result right now.</p>
+  <div class="callout">
+    <span class="label">A real constraint worth knowing</span>
+    The batch API does not support multi-turn tool calling within a single request — you can't execute a tool mid-request and feed its result back in the same batch call. Design accordingly.
+  </div>
+  <h2>Operational details</h2>
+  <ul>
+    <li><code>custom_id</code> fields correlate each request with its corresponding response.</li>
+    <li>On partial failure, resubmit only the failed documents (identified by their <code>custom_id</code>s) — with fixes, like chunking documents that exceeded context limits, rather than resubmitting the whole batch.</li>
+    <li>To hit a tight SLA (e.g., guaranteeing 30 hours end-to-end against a 24-hour processing window), calculate submission frequency backward from the deadline — e.g., submitting every 4 hours.</li>
+    <li>Refine prompts against a small sample before running the full volume through batch, to maximize first-pass success and avoid paying for repeated resubmission cycles.</li>
+  </ul>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">You need to run a compliance audit across 200,000 documents nightly, with results needed by 8am. A batch job submitted at midnight sometimes takes close to 24 hours to complete, risking the deadline. What is the most effective way to guarantee the 8am SLA?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Submit batches more frequently throughout the day, sized so the worst-case 24-hour window still clears by 8am.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Switch the entire workload to the synchronous API, since it guarantees consistent low latency for every request.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Reduce the audit to only the highest-priority 10% of documents so the batch finishes faster on average.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Retry the entire 200,000-document batch immediately whenever it doesn't complete within 12 hours.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the guide's stated approach: since the batch API has no latency SLA and can take up to 24 hours, calculate submission frequency backward from your real deadline so the guaranteed worst case still lands in time.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      The synchronous API is priced and designed for blocking, low-latency single requests — running 200,000 documents through it synchronously would be far more expensive and likely slower in aggregate than a well-scheduled batch. Cutting scope to 10% doesn't fix the timing risk, it just does less auditing. Re-submitting the whole batch after 12 hours wastes the cost savings that are the point of batching and risks compounding the delay rather than resolving it.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 4, Task Statement 4.5. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0022-validation-retry-and-feedback-loops-for-extraction-quality.html">← Task 4.4 — Validation, Retry & Feedback Loops for Extraction Quality</a>
+    <a href="0024-multiinstance-and-multipass-review-architectures.html">Next: Task 4.6 — Multi-Instance & Multi-Pass Review Architectures →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

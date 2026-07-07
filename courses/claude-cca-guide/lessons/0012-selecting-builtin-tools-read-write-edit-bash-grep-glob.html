@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 12 — Selecting Built-in Tools (Read, Write, Edit, Bash, Grep, Glob)</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 2 · Task Statement 2.5</div>
+  <h1>Selecting Built-in Tools (Read, Write, Edit, Bash, Grep, Glob)</h1>
+  <p class="lede">Each built-in tool has a job it's actually good at. Using the wrong one is a common, fixable inefficiency.</p>
+
+
+  <h2>What each tool is actually for</h2>
+  <ul>
+    <li><strong>Grep</strong> — content search: finding patterns like function names, error messages, or import statements inside file contents</li>
+    <li><strong>Glob</strong> — file path pattern matching: finding files by name or extension pattern</li>
+    <li><strong>Read / Write</strong> — full file operations</li>
+    <li><strong>Edit</strong> — targeted modification via unique text matching; when the anchor text isn't unique, Edit fails, and the reliable fallback is Read + Write instead</li>
+  </ul>
+
+  <h2>Build understanding incrementally</h2>
+  <p>The efficient pattern for exploring an unfamiliar codebase: start with Grep to find entry points, then use Read to follow imports and trace flow — rather than reading every file upfront. For tracing a function's usage across wrapper/re-export modules specifically: first identify all the exported names (including re-exports), then Grep for each of those names across the codebase, since a single direct-name search would miss anything called through a wrapper.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">You need to rename a function that's called from many places across a large codebase — some through direct imports, some through re-exporting wrapper modules. What's the most effective approach to reliably find every usage?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Use Grep to find all exported names of the wrapper modules, then Grep again for each of those names across the codebase.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Use Read to open every file in the repository and manually scan each one for references to the function.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Use Glob to find all files with a .js or .ts extension and assume the function is used somewhere among them.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Use Edit to rename the function in its original definition file and rely on IDE tooling to catch the rest.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the guide's tracing pattern for wrapper modules: first identify all exported names, including re-exports, then Grep for each one across the codebase — catching indirect usages a single search would miss.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Reading every file is exhaustive but doesn't scale, and manual scanning misses things a targeted search wouldn't. Glob only narrows by file type, not by actual usage — it doesn't locate anything by itself. Editing the definition and relying on outside IDE tooling assumes capabilities outside the agent and skips the actual investigation, likely missing re-exported call sites.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 2, Task Statement 2.5. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0011-integrating-mcp-servers-into-claude-code-workflows.html">← Task 2.4 — Integrating MCP Servers into Claude Code Workflows</a>
+    <a href="../reference/domain-2-cheatsheet.html">Domain 2 cheat sheet →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

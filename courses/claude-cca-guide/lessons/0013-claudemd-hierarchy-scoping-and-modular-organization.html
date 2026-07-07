@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 13 — CLAUDE.md Hierarchy, Scoping & Modular Organization</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 3 · Task Statement 3.1</div>
+  <h1>CLAUDE.md Hierarchy, Scoping & Modular Organization</h1>
+  <p class="lede">Three levels of CLAUDE.md exist for a reason — mixing them up is the most common team-config bug.</p>
+
+
+  <h2>The three levels</h2>
+  <ul>
+    <li><strong>User-level</strong> (<code>~/.claude/CLAUDE.md</code>) — applies only to that person. Never shared via version control, so teammates never see it.</li>
+    <li><strong>Project-level</strong> (<code>.claude/CLAUDE.md</code> or root <code>CLAUDE.md</code>) — shared with the whole team through the repo.</li>
+    <li><strong>Directory-level</strong> — subdirectory-scoped <code>CLAUDE.md</code> files for package- or module-specific conventions.</li>
+  </ul>
+  <div class="anti-pattern">
+    <span class="label">The named diagnostic case</span>
+    A new team member isn't receiving instructions the rest of the team relies on. Root cause: those instructions were written into someone's <em>user-level</em> file, not the project-level one — so they were never in version control for anyone else to inherit.
+  </div>
+  <h2>Keeping it modular</h2>
+  <p>Two tools prevent a single sprawling CLAUDE.md: the <code>@import</code> syntax, for pulling in specific standards files relevant to a given package (so a maintainer only imports what applies to their domain), and a <code>.claude/rules/</code> directory, for splitting a monolith into focused topic files like <code>testing.md</code>, <code>api-conventions.md</code>, <code>deployment.md</code>. When behavior seems inconsistent across sessions, the <code>/memory</code> command shows exactly which memory files are actually loaded — the fastest way to diagnose a hierarchy mismatch.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A new engineer joins the team and Claude Code doesn't follow the API conventions everyone else's sessions respect automatically. Another teammate confirms those conventions have "always just worked" for them. What's the most likely cause, and how do you confirm it?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">The conventions live in the existing teammate's user-level CLAUDE.md; run /memory to confirm which files load.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">The new engineer's editor needs a restart before project-level CLAUDE.md settings take effect.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Project-level CLAUDE.md files only apply after the first successful commit from a given machine.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">The conventions must be re-typed manually by each new engineer during their onboarding session.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the guide's named diagnostic case exactly: instructions living in one person's user-level file never propagate to teammates, since user-level config isn't version-controlled. /memory is the tool built to surface exactly this mismatch.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      There's no editor-restart or first-commit gate on CLAUDE.md loading — those aren't real mechanisms. Manually retyping defeats the entire point of project-level config being shared automatically via version control.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 3, Task Statement 3.1. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="../reference/domain-2-cheatsheet.html">← Domain 2 cheat sheet</a>
+    <a href="0014-custom-slash-commands-and-skills-configuration.html">Next: Task 3.2 — Custom Slash Commands & Skills Configuration →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

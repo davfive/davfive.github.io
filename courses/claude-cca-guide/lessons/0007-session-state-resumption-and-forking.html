@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 7 — Session State, Resumption & Forking</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 1 · Task Statement 1.7</div>
+  <h1>Session State, Resumption & Forking</h1>
+  <p class="lede">Resuming a session is a bet that the old context is still true.</p>
+
+
+  <h2>Two ways to continue past work</h2>
+  <p><code>--resume &lt;session-name&gt;</code> continues a specific named prior conversation — useful for picking up a long-running investigation across work sessions. <code>fork_session</code> branches off from a shared analysis baseline to explore genuinely divergent approaches (two different refactoring strategies, say) without redoing the shared setup work for each.</p>
+
+  <h2>The staleness trap</h2>
+  <p>Resuming assumes prior context is still valid. If files the agent already analyzed have changed since, the agent doesn't know that unless you tell it — resuming silently carries forward now-incorrect assumptions. The guide's fix is targeted, not wholesale: inform the resumed session about the <em>specific</em> changes, so it re-analyzes just those files rather than everything.</p>
+  <p>Sometimes the better call is to skip resumption entirely: starting a new session with an injected structured summary is more reliable than resuming one where the underlying tool results have gone stale.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">You resume a named session from yesterday to continue a refactoring task, but overnight a teammate changed several files the agent had already analyzed. The agent's first response in the resumed session references the old, now-incorrect file contents. What should you have done differently?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Inform the resumed session about the specific file changes so it knows to re-analyze them.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Start a completely new session from scratch and re-explore the entire codebase again.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Increase the context window so the session can hold both old and new file versions at once.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Ask the agent to always re-read every file at the start of every resumed session automatically.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      Resumption assumes prior context is still valid. When specific files changed, telling the agent exactly what changed lets it re-analyze just those files — the targeted fix, versus full re-exploration.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Starting over discards everything still valid from the prior session to fix a problem that only affects a few files. A bigger context window doesn't solve staleness — having both versions present doesn't tell the model which one is current. Blanket re-reading on every resume is wasteful for large codebases and defeats the purpose of resuming a session at all.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 1, Task Statement 1.7. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0006-task-decomposition-strategies-for-complex-workflows.html">← Task 1.6 — Task Decomposition Strategies for Complex Workflows</a>
+    <a href="../reference/domain-1-cheatsheet.html">Domain 1 cheat sheet →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

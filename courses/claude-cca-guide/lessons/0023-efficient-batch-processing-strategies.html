@@ -6,7 +6,7 @@
 <title>Lesson 23 — Efficient Batch Processing Strategies</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0023-efficient-batch-processing-strategies.html" data-domain="4" data-task-id="4.5" data-lesson-title="Efficient Batch Processing Strategies">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -43,11 +43,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      This is the guide's stated approach: since the batch API has no latency SLA and can take up to 24 hours, calculate submission frequency backward from your real deadline so the guaranteed worst case still lands in time.
+      <span class="fb-text">This is the guide's stated approach: since the batch API has no latency SLA and can take up to 24 hours, calculate submission frequency backward from your real deadline so the guaranteed worst case still lands in time.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      The synchronous API is priced and designed for blocking, low-latency single requests — running 200,000 documents through it synchronously would be far more expensive and likely slower in aggregate than a well-scheduled batch. Cutting scope to 10% doesn't fix the timing risk, it just does less auditing. Re-submitting the whole batch after 12 hours wastes the cost savings that are the point of batching and risks compounding the delay rather than resolving it.
+      <span class="fb-text">The synchronous API is priced and designed for blocking, low-latency single requests — running 200,000 documents through it synchronously would be far more expensive and likely slower in aggregate than a well-scheduled batch. Cutting scope to 10% doesn't fix the timing risk, it just does less auditing. Re-submitting the whole batch after 12 hours wastes the cost savings that are the point of batching and risks compounding the delay rather than resolving it.</span>
     </div>
   </div>
 

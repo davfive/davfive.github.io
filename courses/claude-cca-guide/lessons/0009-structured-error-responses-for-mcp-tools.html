@@ -6,7 +6,7 @@
 <title>Lesson 9 — Structured Error Responses for MCP Tools</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0009-structured-error-responses-for-mcp-tools.html" data-domain="2" data-task-id="2.2" data-lesson-title="Structured Error Responses for MCP Tools">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -45,11 +45,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      Uniform error text hides exactly the information the agent needs to react correctly — a timeout should be retried, a missing order shouldn't, and a permission error should be explained, not retried. Structured metadata is what makes that distinction possible.
+      <span class="fb-text">Uniform error text hides exactly the information the agent needs to react correctly — a timeout should be retried, a missing order shouldn't, and a permission error should be explained, not retried. Structured metadata is what makes that distinction possible.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      Blindly retrying wastes calls on non-retryable failures like permission errors. Asking the model to "interpret more intelligently" asks it to infer distinctions from a message that structurally contains none — there's nothing to interpret. Logging for later investigation is useful for observability but does nothing to change the agent's real-time behavior.
+      <span class="fb-text">Blindly retrying wastes calls on non-retryable failures like permission errors. Asking the model to "interpret more intelligently" asks it to infer distinctions from a message that structurally contains none — there's nothing to interpret. Logging for later investigation is useful for observability but does nothing to change the agent's real-time behavior.</span>
     </div>
   </div>
 

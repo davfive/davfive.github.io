@@ -6,7 +6,7 @@
 <title>Lesson 2 — Coordinator-Subagent Architecture</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body data-lesson-file="0002-coordinator-subagent-architecture.html" data-domain="1" data-task-id="1.2" data-lesson-title="Coordinator-Subagent Hub-and-Spoke">
 <div class="page">
 
   <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
@@ -51,11 +51,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      Subagents have isolated context — spawning one doesn't hand it the coordinator's conversation history. With no actual findings in its prompt, the subagent has nothing concrete to synthesize and produces something generic by default.
+      <span class="fb-text">Subagents have isolated context — spawning one doesn't hand it the coordinator's conversation history. With no actual findings in its prompt, the subagent has nothing concrete to synthesize and produces something generic by default.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      B assumes a capacity problem, but the subagent has zero findings in context — no window size fixes that. C throws away the observability, error-handling, and routing control the hub-and-spoke pattern exists to provide, and still doesn't put the findings anywhere. D polishes wording without changing what information the subagent actually receives. Fix: pass the real findings into the prompt directly.
+      <span class="fb-text">B assumes a capacity problem, but the subagent has zero findings in context — no window size fixes that. C throws away the observability, error-handling, and routing control the hub-and-spoke pattern exists to provide, and still doesn't put the findings anywhere. D polishes wording without changing what information the subagent actually receives. Fix: pass the real findings into the prompt directly.</span>
     </div>
   </div>
 
@@ -70,11 +70,11 @@
     </div>
     <div class="quiz-feedback correct" data-feedback-correct>
       <span class="label">Correct</span>
-      Same failure pattern the Exam Guide covers directly (see its own Sample Question on this exact topic — worth re-reading now). All three subagents were logistics/shipping-specific; cyber, labor, and materials risk were never assigned to anyone. No downstream fix recovers scope that was never delegated.
+      <span class="fb-text">Same failure pattern the Exam Guide covers directly (see its own Sample Question on this exact topic — worth re-reading now). All three subagents were logistics/shipping-specific; cyber, labor, and materials risk were never assigned to anyone. No downstream fix recovers scope that was never delegated.</span>
     </div>
     <div class="quiz-feedback incorrect" data-feedback-incorrect>
       <span class="label">Not quite</span>
-      B and C both blame agents that executed their assigned scope correctly — there's nothing to search or synthesize for categories nobody was pointed at. D misreads this as a capacity problem; it's a scope problem. This is exactly why the guide treats "narrow decomposition" as its own architectural risk, distinct from any individual subagent's execution quality.
+      <span class="fb-text">B and C both blame agents that executed their assigned scope correctly — there's nothing to search or synthesize for categories nobody was pointed at. D misreads this as a capacity problem; it's a scope problem. This is exactly why the guide treats "narrow decomposition" as its own architectural risk, distinct from any individual subagent's execution quality.</span>
     </div>
   </div>
 

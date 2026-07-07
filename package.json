@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build.mjs",
-    "serve": "npx --yes serve dist"
+    "serve": "npx --yes serve dist",
+    "publish": "npm run build && gh-pages -d dist"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }

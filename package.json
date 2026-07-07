@@ -1,0 +1,9 @@
+{
+  "name": "davfive.github.io",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "npx --yes serve dist"
+  }
+}

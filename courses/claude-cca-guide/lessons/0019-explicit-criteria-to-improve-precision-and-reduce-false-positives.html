@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 19 — Explicit Criteria to Improve Precision & Reduce False Positives</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 4 · Task Statement 4.1</div>
+  <h1>Explicit Criteria to Improve Precision & Reduce False Positives</h1>
+  <p class="lede">"Be conservative" is not a criterion. It's a hope.</p>
+
+
+  <h2>Specific beats vague, every time</h2>
+  <p>Compare "check that comments are accurate" against "flag comments only when claimed behavior contradicts actual code behavior." Both sound like similar instructions; only the second gives the model something concrete to check against. General guidance like "be conservative" or "only report high-confidence findings" doesn't actually improve precision — it just asks the model to guess at a threshold you never defined.</p>
+  <div class="anti-pattern">
+    <span class="label">The trust cost of false positives</span>
+    False positives aren't evenly costly. A category with a high false-positive rate erodes trust in <em>every other category</em> the same system reports on — developers stop reading all the findings, not just the noisy ones.
+  </div>
+  <h2>What actually works</h2>
+  <p>Write criteria that explicitly define what to report (bugs, security issues) versus what to skip (minor style, local team patterns) — rather than relying on the model's own confidence estimate to filter. For severity classification specifically, give concrete code examples at each severity level, not just adjectives ("critical," "minor") on their own.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A code-review agent flags too many comment/behavior mismatches that turn out to be non-issues on inspection. The current instruction says "only report high-confidence findings" and "be conservative." Developers have started ignoring the review entirely. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Replace the vague guidance with an explicit criterion: flag only when claimed behavior contradicts actual code behavior.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Strengthen the wording to "be extremely conservative and only report near-certain findings."</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Remove comment-accuracy checking from the review entirely since it can't be made reliable.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Ask the model to self-report a numeric confidence score and only surface findings above 90%.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the exact contrast the guide draws: a concrete behavioral criterion (claimed vs. actual behavior) gives the model something to check, where "be conservative" only asks it to guess at an undefined threshold.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Intensifying the same vague language ("extremely conservative") doesn't give the model a new signal to act on — it's still asking for calibration without providing criteria. Removing the check entirely throws away a category that could be fixed with better criteria instead. Self-reported confidence scores are exactly the kind of proxy the guide flags as unreliable for filtering precision.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 4, Task Statement 4.1. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="../reference/domain-3-cheatsheet.html">← Domain 3 cheat sheet</a>
+    <a href="0020-fewshot-prompting-for-output-consistency-and-quality.html">Next: Task 4.2 — Few-Shot Prompting for Output Consistency & Quality →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

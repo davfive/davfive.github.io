@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 9 — Structured Error Responses for MCP Tools</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 2 · Task Statement 2.2</div>
+  <h1>Structured Error Responses for MCP Tools</h1>
+  <p class="lede">A generic "operation failed" message hides exactly the information an agent needs to recover intelligently.</p>
+
+
+  <h2>The isError pattern</h2>
+  <p>MCP's <code>isError</code> flag communicates tool failure back to the agent — but the flag alone isn't enough. The guide distinguishes four categories: <strong>transient</strong> (timeouts, service unavailability), <strong>validation</strong> (invalid input), <strong>business</strong> (policy violations), and <strong>permission</strong> errors. A uniform "Operation failed" response collapses all four into one undifferentiated signal, and an agent that can't tell them apart can't react appropriately — it might retry a permission error forever, or give up on a transient one it should have retried.</p>
+
+  <h2>What to actually return</h2>
+  <ul>
+    <li><code>errorCategory</code> (transient / validation / business / permission)</li>
+    <li><code>isRetryable</code> boolean — with <code>retryable: false</code> plus a customer-friendly explanation for business-rule violations specifically</li>
+    <li>A human-readable description the agent can relay or reason from</li>
+  </ul>
+
+  <div class="callout">
+    <span class="label">A subtler distinction</span>
+    An access failure (timeout — needs a retry decision) is not the same as a valid empty result (the query succeeded; there's just nothing to return). Conflating the two — treating "no matches" the same as "couldn't check" — is its own bug.
+  </div>
+  <p>Within multi-agent systems: have subagents attempt local recovery for transient failures themselves, and only propagate to the coordinator the errors they genuinely can't resolve — along with partial results and what was already attempted.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">An order-lookup tool returns the exact same generic message, "Operation failed," whether the order doesn't exist, the request timed out, or the customer isn't authorized to view it. The agent responds identically in all three cases by simply retrying the call. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Return structured error metadata including errorCategory, an isRetryable flag, and a human-readable description.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Have the agent retry each failed call up to five times before giving up and reporting failure.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Add a system prompt instruction telling the agent to interpret failures more intelligently overall.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Log all failures to a monitoring dashboard so engineers can investigate patterns after the fact.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      Uniform error text hides exactly the information the agent needs to react correctly — a timeout should be retried, a missing order shouldn't, and a permission error should be explained, not retried. Structured metadata is what makes that distinction possible.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Blindly retrying wastes calls on non-retryable failures like permission errors. Asking the model to "interpret more intelligently" asks it to infer distinctions from a message that structurally contains none — there's nothing to interpret. Logging for later investigation is useful for observability but does nothing to change the agent's real-time behavior.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 2, Task Statement 2.2. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0008-designing-effective-tool-interfaces.html">← Task 2.1 — Designing Effective Tool Interfaces</a>
+    <a href="0010-tool-distribution-and-toolchoice-configuration.html">Next: Task 2.3 — Tool Distribution & tool_choice Configuration →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

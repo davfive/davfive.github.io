@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 28 — Managing Context in Large Codebase Exploration</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 5 · Task Statement 5.4</div>
+  <h1>Managing Context in Large Codebase Exploration</h1>
+  <p class="lede">Long exploration sessions degrade quietly — the fix is externalizing memory, not trying harder to remember.</p>
+
+
+  <h2>How degradation shows up</h2>
+  <p>In extended sessions, a model can start giving inconsistent answers and referencing "typical patterns" in generic terms rather than the specific classes it actually discovered earlier in the same session — a sign that earlier findings have effectively fallen out of usable context.</p>
+  <h2>Externalizing memory</h2>
+  <ul>
+    <li><strong>Scratchpad files</strong> — persist key findings across context boundaries so later questions can reference concrete earlier discoveries instead of the model's fading recollection of them.</li>
+    <li><strong>Subagent delegation</strong> — spawn subagents for specific investigative questions ("find all test files," "trace refund flow dependencies") while the main agent stays focused on high-level coordination rather than drowning in exploration detail itself.</li>
+    <li><strong>Phase summaries</strong> — summarize key findings from one exploration phase, and inject that summary into the next phase's initial context, before spawning subagents for it.</li>
+    <li><strong><code>/compact</code></strong> — reduces context usage mid-session once it's filled with verbose discovery output.</li>
+  </ul>
+  <div class="correct-pattern">
+    <span class="label">Crash recovery, structurally</span>
+    Each agent exports its state to a known location as it works. On resume, the coordinator loads a manifest of that exported state and injects it back into agent prompts — recovery becomes a data-loading problem, not a re-exploration problem.
+  </div>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">After several hours of codebase exploration in one long session, the agent starts referring to "the typical repository pattern" in generic terms, even though 40 minutes earlier it had identified three specific, differently-structured repository classes by name. What's the most effective fix going forward?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Have the agent maintain a scratchpad file recording specific findings, and reference it in later questions.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">End the session and start a completely new one so the model isn't carrying any prior context at all.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Instruct the model to try harder to remember the specific class names discussed earlier in the session.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Reduce the number of files the agent is allowed to explore so less total information needs to be tracked.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the guide's stated fix for exactly this degradation pattern: externalizing key findings to a scratchpad file counteracts the fading of specific details in long sessions, since later steps can reference the concrete record rather than relying on in-context recall.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Starting over loses the three repository classes already found, requiring redundant re-discovery. "Try harder to remember" isn't a real lever — the problem is a structural context-degradation effect, not effort. Limiting file exploration reduces the value of the investigation itself rather than fixing how findings are retained.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 5, Task Statement 5.4. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0027-error-propagation-strategies-across-multiagent-systems.html">← Task 5.3 — Error Propagation Strategies Across Multi-Agent Systems</a>
+    <a href="0029-human-review-workflows-and-confidence-calibration.html">Next: Task 5.5 — Human Review Workflows & Confidence Calibration →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 21 — Enforcing Structured Output with Tool Use & JSON Schemas</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 4 · Task Statement 4.3</div>
+  <h1>Enforcing Structured Output with Tool Use & JSON Schemas</h1>
+  <p class="lede">Tool use eliminates one whole category of failure. It does not eliminate all of them.</p>
+
+
+  <h2>What tool_use with schemas guarantees</h2>
+  <p>Defining an extraction tool with a JSON schema as its input, then reading the structured arguments off the <code>tool_use</code> response, is the most reliable way to get guaranteed schema-compliant output — it eliminates JSON syntax errors as a category entirely.</p>
+  <div class="callout">
+    <span class="label">Syntax-valid is not the same as correct</span>
+    A strict schema stops the model from returning malformed JSON. It does nothing to stop <em>semantic</em> errors — line items that don't sum to the stated total, a value placed in the wrong field. Those need separate validation (see Task 4.4).
+  </div>
+  <h2>tool_choice, precisely</h2>
+  <ul>
+    <li><code>"auto"</code> — model may return plain text instead of calling a tool</li>
+    <li><code>"any"</code> — model must call some tool, but chooses which; useful when several extraction schemas exist and the document type isn't known ahead of time</li>
+    <li>Forced (<code>{"type": "tool", "name": "extract_metadata"}</code>) — guarantees a specific tool runs, e.g. before enrichment steps depend on its output</li>
+  </ul>
+  <h2>Schema design choices that prevent fabrication</h2>
+  <p>Mark fields optional/nullable when the source document may genuinely not contain that information — a required field the model can't find otherwise gets fabricated to satisfy the schema. Use enum fields with an <code>"other"</code> + free-text detail pattern (or an explicit <code>"unclear"</code> value) for categories that don't cleanly fit a fixed list.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">An invoice-extraction tool has a required "purchase_order_number" field. On invoices that never included a PO number, the model started fabricating plausible-looking numbers to satisfy the schema. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Make purchase_order_number optional/nullable so the model can omit it rather than invent a value.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Switch tool_choice from a forced tool to "auto" so the model can skip the extraction entirely.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Add a system prompt instruction telling the model never to fabricate purchase order numbers.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Add a second validation-only tool call that re-checks the purchase order number after extraction.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the guide's exact prevention mechanism: a required field the model can't find gets fabricated to satisfy the schema — making the field optional/nullable removes that pressure entirely.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Switching to "auto" risks losing structured output altogether rather than fixing the one problematic field. A prompt instruction is a soft patch on a structural incentive — the schema itself is still telling the model the field is required. A second validation pass can catch the fabrication after the fact but doesn't remove the incentive that caused it.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 4, Task Statement 4.3. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0020-fewshot-prompting-for-output-consistency-and-quality.html">← Task 4.2 — Few-Shot Prompting for Output Consistency & Quality</a>
+    <a href="0022-validation-retry-and-feedback-loops-for-extraction-quality.html">Next: Task 4.4 — Validation, Retry & Feedback Loops for Extraction Quality →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

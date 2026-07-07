@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference — Domain 1: Agentic Architecture & Orchestration</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .page { max-width: 640px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.8rem 0 1.6rem; }
+  th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  @media print {
+    body { padding: 0.5in; font-size: 13px; }
+    .ask-followup, .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Reference · Domain 1 (27% of exam)</div>
+  <h1>Agentic Architecture & Orchestration</h1>
+  <p class="lede">Print-friendly compression of all 7 Task Statements in this domain.</p>
+
+  <h2>1.1 — Agentic loop control flow</h2>
+  <table>
+    <tr><th>Signal</th><th>Meaning</th><th>Action</th></tr>
+    <tr><td><code>stop_reason: "tool_use"</code></td><td>Claude wants to call a tool</td><td>Execute tool(s), append results to history, loop again</td></tr>
+    <tr><td><code>stop_reason: "end_turn"</code></td><td>Claude is finished</td><td>Return final response, stop looping</td></tr>
+  </table>
+  <div class="anti-pattern"><span class="label">Never the primary stop signal</span>Text parsing ("I'm done") &middot; arbitrary iteration caps &middot; presence of assistant text</div>
+
+  <h2>1.2 — Coordinator-subagent hub-and-spoke</h2>
+  <ul>
+    <li>All communication routes through the coordinator; subagents never talk directly to each other.</li>
+    <li>Subagents have <strong>isolated context</strong> — findings must be placed directly in the subagent's prompt.</li>
+    <li>Coordinator's jobs: decomposition → delegation (minimize overlap) → aggregation (iterative refinement).</li>
+  </ul>
+  <div class="anti-pattern"><span class="label">Signature trap</span>Overly narrow decomposition — every subagent executes correctly, but the coordinator never assigned a whole category of the topic.</div>
+
+  <h2>1.3 — Subagent invocation, context passing, spawning</h2>
+  <ul>
+    <li><code>Task</code> tool spawns subagents; coordinator's <code>allowedTools</code> must include <code>"Task"</code>.</li>
+    <li>Multiple <code>Task</code> calls in <em>one</em> response = parallel execution. One-per-turn = sequential.</li>
+    <li>Write goals and quality bars into subagent prompts, not rigid step-by-step scripts.</li>
+  </ul>
+
+  <h2>1.4 — Multi-step workflows: enforcement &amp; handoff</h2>
+  <ul>
+    <li>Programmatic enforcement (hooks, gates) = deterministic. Prompt instructions = probabilistic, never zero-failure.</li>
+    <li>Multi-concern requests: decompose → investigate in parallel → synthesize one resolution.</li>
+    <li>Human handoffs need a structured summary (ID, root cause, amounts, recommended action).</li>
+  </ul>
+
+  <h2>1.5 — Agent SDK hooks</h2>
+  <ul>
+    <li><code>PostToolUse</code> hook normalizes inconsistent tool result formats before the model sees them.</li>
+    <li>Hooks can block an outgoing tool call outright when it violates a business rule.</li>
+  </ul>
+
+  <h2>1.6 — Task decomposition strategies</h2>
+  <ul>
+    <li>Prompt chaining (fixed sequence) for predictable shape; dynamic decomposition for open-ended investigation.</li>
+    <li>Attention dilution fix: per-file local passes + separate cross-file integration pass.</li>
+  </ul>
+
+  <h2>1.7 — Session state, resumption, forking</h2>
+  <ul>
+    <li><code>--resume</code> continues a named session; <code>fork_session</code> branches from a shared baseline.</li>
+    <li>Staleness trap: inform a resumed session about specific changed files rather than assuming context is current.</li>
+  </ul>
+
+  <div class="correct-pattern"><span class="label">Cross-cutting rule</span><code>stop_reason</code> is the only reliable loop signal. Isolation and deterministic enforcement are the two recurring fixes across this whole domain.</div>
+
+  <h2>Glossary (Domain 1)</h2>
+  <p><strong>Hub-and-spoke</strong>: coordinator routes all inter-agent communication.<br>
+  <strong>Isolated context</strong>: a subagent's default — no memory of the coordinator's history unless given explicitly.<br>
+  <strong>Narrow decomposition</strong>: a task breakdown that omits whole categories, not just under-executes one.<br>
+  <strong>Deterministic enforcement</strong>: a hook or programmatic gate that makes a skip physically impossible, vs. prompt guidance which only makes it unlikely.</p>
+
+  <div class="nav-links">
+    <a href="0007-session-state-resumption-and-forking.html">← Task 1.7 — Session State, Resumption & Forking</a>
+    <a href="0008-designing-effective-tool-interfaces.html">Domain 2: Tool Design & MCP Integration →</a>
+  </div>
+
+</div>
+</body>
+</html>

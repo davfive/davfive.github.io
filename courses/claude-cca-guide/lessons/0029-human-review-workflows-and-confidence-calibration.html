@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 29 — Human Review Workflows & Confidence Calibration</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 5 · Task Statement 5.5</div>
+  <h1>Human Review Workflows & Confidence Calibration</h1>
+  <p class="lede">97% overall accuracy can hide a field or document type performing far worse than the average suggests.</p>
+
+
+  <h2>Aggregate metrics hide segment failure</h2>
+  <p>A single headline accuracy number can mask genuinely poor performance concentrated in one specific document type or one specific field, simply because it's outweighed by strong performance everywhere else in the average. Validating accuracy broken out by document type and by field — before reducing human review based on that aggregate number — is what actually catches this.</p>
+  <h2>Calibrating where review attention goes</h2>
+  <ul>
+    <li><strong>Stratified random sampling</strong> of high-confidence extractions specifically — not just low-confidence ones — to keep measuring real error rates and catch novel error patterns that a confidence score alone wouldn't flag.</li>
+    <li><strong>Field-level confidence scores</strong>, calibrated against labeled validation sets, so review effort routes to the fields actually likely to be wrong rather than treating a whole document as one uniform confidence.</li>
+    <li>Route to human review specifically when model confidence is low, or when the source document itself is ambiguous or internally contradictory — prioritizing limited reviewer time toward genuinely uncertain cases.</li>
+  </ul>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">An extraction system reports 97% overall accuracy, and the team is considering removing human review for high-confidence extractions to save reviewer time. What should happen before making that change?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Validate accuracy broken out by document type and field, since the aggregate number can mask poor segment performance.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Proceed with removing review, since 97% overall accuracy is well above most reasonable operational thresholds.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Increase the overall sample size used to calculate the 97% figure to make the number more statistically robust.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Ask the model to simply restate its own confidence level as a final check before disabling review.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the exact risk the guide names: a strong aggregate can hide a specific document type or field performing badly, and that only surfaces by checking accuracy segmented by type and field before pulling back human review.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Acting on the aggregate number alone is precisely the risk being flagged — 97% overall doesn't rule out a much weaker specific segment. A larger sample makes the same aggregate number more precise without addressing whether it's hiding segment variation. Asking the model to restate its own confidence doesn't substitute for validating against a labeled set, which is what actual calibration requires.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 5, Task Statement 5.5. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0028-managing-context-in-large-codebase-exploration.html">← Task 5.4 — Managing Context in Large Codebase Exploration</a>
+    <a href="0030-information-provenance-and-uncertainty-in-multisource-synthesis.html">Next: Task 5.6 — Information Provenance & Uncertainty in Multi-Source Synthesis →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 5 — Agent SDK Hooks: Interception & Normalization</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 1 · Task Statement 1.5</div>
+  <h1>Agent SDK Hooks: Interception & Normalization</h1>
+  <p class="lede">Hooks are where you put guarantees that can't live in a prompt.</p>
+
+
+  <h2>Two hook use cases</h2>
+  <p><strong>Normalizing incoming results.</strong> A <code>PostToolUse</code> hook intercepts tool results before the model ever sees them — useful when different MCP tools return the same kind of data in different shapes (a Unix timestamp from one, ISO 8601 from another, a numeric status code from a third). Normalize at the boundary, and the model never has to reconcile the discrepancy itself.</p>
+  <p><strong>Blocking outgoing calls.</strong> A hook can also intercept an outgoing tool call and block it outright when it violates a business rule — refunds above a threshold, for instance — redirecting to an alternative workflow like human escalation.</p>
+
+  <div class="correct-pattern">
+    <span class="label">Same principle as Task 1.4</span>
+    Hooks give deterministic guarantees. Prompt instructions give probabilistic compliance. Reach for a hook specifically when the business rule cannot be allowed to fail even occasionally.
+  </div>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">Your agent pulls order data from three different MCP tools, each returning dates in a different format (Unix timestamp, ISO 8601, and "MM/DD/YYYY"). The agent frequently miscalculates date differences. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Implement a PostToolUse hook that normalizes all date formats before the results reach the model.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Add a system prompt instruction asking the model to carefully parse each date format correctly.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Ask the model to always double-check its date math before presenting results to the user.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Restrict the agent to only using the MCP tool with the date format that's easiest to parse.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is exactly the normalization use case for PostToolUse hooks: intercept tool results and transform them into one consistent format before the model has to reason about the discrepancy at all.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Asking for careful parsing and asking for double-checked math both push a data-quality problem onto the model's reasoning, which stays unreliable — the model can still misparse an ambiguous format. Restricting to one tool loses functionality just to dodge the problem instead of fixing it. Normalize at the boundary; don't push the burden onto the model.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 1, Task Statement 1.5. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0004-multistep-workflows-enforcement-and-handoff.html">← Task 1.4 — Multi-Step Workflows: Enforcement & Handoff</a>
+    <a href="0006-task-decomposition-strategies-for-complex-workflows.html">Next: Task 1.6 — Task Decomposition Strategies for Complex Workflows →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

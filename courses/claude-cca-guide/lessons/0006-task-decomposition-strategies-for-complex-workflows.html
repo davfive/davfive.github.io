@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 6 — Task Decomposition Strategies for Complex Workflows</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 1 · Task Statement 1.6</div>
+  <h1>Task Decomposition Strategies for Complex Workflows</h1>
+  <p class="lede">Two decomposition modes, and a review-quality failure mode you've probably already hit.</p>
+
+
+  <h2>Fixed pipelines vs. adaptive decomposition</h2>
+  <p><strong>Prompt chaining</strong> — a fixed sequence of steps — fits predictable, multi-aspect work where you know the shape in advance (analyze each file individually, then run one cross-file integration pass). <strong>Dynamic decomposition</strong> fits open-ended investigation, where subtasks are generated based on what's discovered at each step rather than planned upfront.</p>
+
+  <h2>The attention-dilution failure</h2>
+  <p>Reviewing many files together in one pass produces a specific, recognizable failure: inconsistent depth (some files get real scrutiny, others don't), and sometimes outright contradictions — the same pattern flagged as a bug in one file and approved in another. The fix isn't a bigger model or bigger context window; it's splitting into <strong>per-file local passes</strong> plus a <strong>separate cross-file integration pass</strong> that specifically looks for issues spanning files.</p>
+
+  <h2>Open-ended tasks</h2>
+  <p>For something like "add comprehensive tests to a legacy codebase" — no fixed shape exists upfront — map the structure first, identify high-impact areas, then build a prioritized plan that adapts as dependencies are discovered along the way.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A pull request modifies 14 files. Reviewing them all together in a single pass produces inconsistent depth — detailed feedback on some files, superficial comments on others — and even contradictory findings, with the same pattern flagged as a bug in one file and approved in another. What's the most effective restructuring?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Split into focused passes: analyze each file individually, then run a separate integration pass for cross-file issues.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Require the pull request to be split into several smaller submissions before any review begins.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Switch to a model with a larger context window so all 14 files fit comfortably in one pass.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Run the review three times and only report issues that show up in at least two of the runs.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is attention dilution from processing many files at once. Per-file local passes give each file focused attention; a separate integration pass then catches the cross-file issues a per-file view alone would miss.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Splitting the PR itself shifts the burden to developers without fixing the review process. A larger context window misdiagnoses the problem — it doesn't fix inconsistent attention within that window, only how much fits inside it. Running the review three times and requiring agreement would actually suppress real findings that only show up intermittently — the opposite of what's needed.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 1, Task Statement 1.6. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0005-agent-sdk-hooks-interception-and-normalization.html">← Task 1.5 — Agent SDK Hooks: Interception & Normalization</a>
+    <a href="0007-session-state-resumption-and-forking.html">Next: Task 1.7 — Session State, Resumption & Forking →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

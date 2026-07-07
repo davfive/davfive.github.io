@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 4 — Multi-Step Workflows: Enforcement & Handoff</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 1 · Task Statement 1.4</div>
+  <h1>Multi-Step Workflows: Enforcement & Handoff</h1>
+  <p class="lede">When a workflow step absolutely cannot be skipped, a well-worded instruction is not enough.</p>
+
+
+  <h2>Two kinds of compliance</h2>
+  <p><strong>Programmatic enforcement</strong> (hooks, prerequisite gates) makes a step physically impossible to skip. <strong>Prompt-based guidance</strong> makes a step likely, not guaranteed. The exam's framing is blunt about this: when deterministic compliance is required — identity verification before a financial operation is the guide's own example — prompt instructions alone have a non-zero failure rate. That's not a criticism of prompting; it's a statement about what prompting can and can't guarantee.</p>
+
+  <div class="correct-pattern">
+    <span class="label">Concretely</span>
+    A programmatic prerequisite blocks <code>process_refund</code> from executing until <code>get_customer</code> has returned a verified customer ID. The tool call literally cannot fire out of order — not "is unlikely to," cannot.
+  </div>
+
+  <h2>Handling multi-concern requests</h2>
+  <p>When a single customer message bundles multiple distinct concerns, decompose it into separate items, investigate each in parallel using shared context, then synthesize one unified resolution — rather than answering the first concern you notice and dropping the rest.</p>
+
+  <h2>Structured handoffs</h2>
+  <p>When a workflow escalates mid-process to a human, that human has no access to the conversation transcript. A structured handoff summary — customer ID, root cause, amounts involved, recommended action — is what makes the handoff actually usable, versus a human starting from zero.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A refund agent occasionally processes refunds for unverified customers. The system prompt already says "always verify identity before refunds," but under complex multi-topic conversations it isn't always followed. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Add a programmatic prerequisite that blocks the refund tool call until identity verification has completed.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Rewrite the system prompt to state the verification requirement in stronger, more emphatic language.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Add several few-shot examples showing the agent verifying identity before every refund request.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Reduce the number of tools available to the agent so refunds are simpler to process correctly.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is a case requiring deterministic compliance — financial operations are the guide's own example. However strongly worded, prompt instructions have a non-zero failure rate; a programmatic prerequisite gate makes the skip physically impossible rather than just unlikely.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Stronger wording and more few-shot examples both stay in the probabilistic-compliance world — they reduce but don't eliminate failures. Reducing available tools doesn't address ordering at all; fewer tools doesn't guarantee verification happens first. Deterministic requirements need deterministic enforcement.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 1, Task Statement 1.4. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0003-subagent-invocation-context-passing-and-spawning.html">← Task 1.3 — Subagent Invocation, Context Passing & Spawning</a>
+    <a href="0005-agent-sdk-hooks-interception-and-normalization.html">Next: Task 1.5 — Agent SDK Hooks: Interception & Normalization →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

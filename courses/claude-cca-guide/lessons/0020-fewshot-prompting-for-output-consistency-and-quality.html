@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 20 — Few-Shot Prompting for Output Consistency & Quality</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 4 · Task Statement 4.2</div>
+  <h1>Few-Shot Prompting for Output Consistency & Quality</h1>
+  <p class="lede">Examples don't just show format — they teach judgment on the ambiguous cases that break rules-based prompting.</p>
+
+
+  <h2>What few-shot actually buys you</h2>
+  <p>When detailed instructions alone still produce inconsistent output, few-shot examples are the most effective fix. They do more than demonstrate formatting: showing 2-4 examples of ambiguous-case handling — which tool to pick for an ambiguous request, how to judge a borderline test-coverage gap — teaches the model to generalize the underlying judgment to novel cases it hasn't seen, rather than only matching the exact cases you listed.</p>
+  <div class="correct-pattern">
+    <span class="label">Where the guide names concrete wins</span>
+    Demonstrating output format (location, issue, severity, suggested fix) for consistency &middot; distinguishing acceptable patterns from genuine issues to cut false positives without losing generalization &middot; showing correct extraction from varied document structures (inline citations vs. bibliographies) &middot; reducing empty/null extraction on required fields by showing extraction from documents with varied formatting.
+  </div>
+  <p>The examples that add the most value are the ones showing <em>why</em> one action was chosen over a plausible alternative — reasoning transfer, not just output-shape transfer.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">An extraction pipeline pulling structured data from scientific papers frequently returns null for the "methodology" field — not because papers lack a methodology, but because it's sometimes described inline in the results section rather than under a dedicated heading. Detailed prose instructions haven't fixed this. What's the most effective next step?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Add few-shot examples showing correct methodology extraction from papers with varied document structures.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Add a fallback rule that defaults methodology to "not specified" whenever no dedicated heading exists.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Increase the model's output token limit so it has more room to search for methodology-related content.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Split methodology extraction into its own separate API call, run independently of the rest of the schema.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is a named example in the guide directly: few-shot examples demonstrating correct extraction from varied document structures fixes exactly this class of empty/null-field problem where prose instructions alone haven't.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Defaulting to "not specified" doesn't fix extraction — it just documents the failure instead of correcting it. A larger output limit doesn't address the actual problem, which is recognizing methodology content outside its expected location, not running out of room. Splitting into a separate call doesn't change what signal the model has to recognize inline methodology content in the first place.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 4, Task Statement 4.2. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0019-explicit-criteria-to-improve-precision-and-reduce-false-positives.html">← Task 4.1 — Explicit Criteria to Improve Precision & Reduce False Positives</a>
+    <a href="0021-enforcing-structured-output-with-tool-use-and-json-schemas.html">Next: Task 4.3 — Enforcing Structured Output with Tool Use & JSON Schemas →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

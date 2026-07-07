@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 10 — Tool Distribution & tool_choice Configuration</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 2 · Task Statement 2.3</div>
+  <h1>Tool Distribution & tool_choice Configuration</h1>
+  <p class="lede">More tools per agent doesn't mean more capable — past a point, it means less reliable.</p>
+
+
+  <h2>Fewer, better-scoped tools</h2>
+  <p>Giving an agent access to too many tools — the guide's example is 18 instead of 4-5 — degrades selection reliability simply by increasing decision complexity. Worse, agents given tools outside their actual specialization tend to misuse them: a synthesis agent with search access will sometimes go search instead of synthesizing what it's already been given.</p>
+  <p>The fix is scoped tool access: give each agent only what its role needs, with a small number of deliberately-chosen cross-role tools for genuinely high-frequency needs (a <code>verify_fact</code> tool on a synthesis agent, say), routing anything more complex back through the coordinator instead.</p>
+
+  <h2>tool_choice as a precision instrument</h2>
+  <ul>
+    <li><code>"auto"</code> — model may call a tool or just respond in text</li>
+    <li><code>"any"</code> — model must call some tool, but picks which</li>
+    <li>Forced selection (<code>{"type": "tool", "name": "..."}</code>) — model must call this specific tool</li>
+  </ul>
+  <p>Forced selection is useful for sequencing — forcing <code>extract_metadata</code> before enrichment tools run, then handling the rest in a follow-up turn. <code>"any"</code> guarantees a tool gets called at all, useful when a conversational text response would be the wrong outcome.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A synthesis subagent, whose job is to combine findings from other agents, has been given the full toolset of 16 tools used across the whole pipeline "just in case it needs something." It has started making occasional unnecessary web searches instead of synthesizing the findings it was already given. What's the most effective fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Restrict the synthesis subagent's tool set to only the tools relevant to its actual role.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Add a system prompt instruction telling the synthesis agent to avoid using search tools.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Increase the synthesis agent's context window so it can better judge which tools are relevant.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Rename the search tools so their purpose is less obvious to the synthesis agent.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the named failure mode directly — tools outside a subagent's specialization get misused. Scoping tool access to what the role actually needs fixes the root cause instead of patching around it.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      A prompt instruction is a patch for a structural over-provisioning problem — it may reduce but won't eliminate the behavior, and doesn't scale to every other unnecessary tool. A bigger context window doesn't address decision complexity, which comes from tool count, not context size. Renaming tools to obscure their purpose damages usability without addressing why the agent has access to search at all.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 2, Task Statement 2.3. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0009-structured-error-responses-for-mcp-tools.html">← Task 2.2 — Structured Error Responses for MCP Tools</a>
+    <a href="0011-integrating-mcp-servers-into-claude-code-workflows.html">Next: Task 2.4 — Integrating MCP Servers into Claude Code Workflows →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

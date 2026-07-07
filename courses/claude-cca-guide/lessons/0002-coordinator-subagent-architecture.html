@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 2 — Coordinator-Subagent Architecture</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 1 · Task Statement 1.2</div>
+  <h1>Coordinator-Subagent Hub-and-Spoke</h1>
+  <p class="lede">The exam's favorite failure mode here isn't a bug in any one subagent — it's a decomposition decision the coordinator made before any subagent ran.</p>
+
+  <h2>The pattern</h2>
+  <p>Hub-and-spoke: a coordinator agent manages <em>all</em> inter-subagent communication, error handling, and information routing. Subagents never talk to each other directly — everything flows through the hub. This buys you three things: observability (one place to see everything), consistent error handling (one place to catch and react), and controlled information flow (no subagent gets more than it needs).</p>
+
+  <div class="callout">
+    <span class="label">The detail that trips people up</span>
+    Subagents operate with <strong>isolated context</strong>. Spawning a subagent does not hand it the coordinator's conversation history automatically. If a subagent needs prior findings, tool results, or context from earlier in the session, the coordinator has to put that content <em>directly into the subagent's prompt</em>. This is the single most common source of "the subagent gave a generic/wrong answer" bugs.
+  </div>
+
+  <h2>The coordinator's actual job</h2>
+  <p>Three responsibilities, in the exam's framing:</p>
+  <ul>
+    <li><strong>Task decomposition</strong> — breaking the overall goal into subtasks and deciding which subagents to invoke, dynamically, based on query complexity (not always routing through a fixed full pipeline).</li>
+    <li><strong>Delegation</strong> — partitioning scope across subagents to minimize duplicated work (distinct subtopics or source types per agent, not overlapping ones).</li>
+    <li><strong>Result aggregation</strong> — combining subagent outputs, and running <em>iterative refinement</em>: evaluating the synthesis for gaps, re-delegating to search/analysis subagents with targeted follow-up queries, and re-invoking synthesis until coverage is actually sufficient.</li>
+  </ul>
+
+  <h2>The named risk: overly narrow decomposition</h2>
+  <p>This is worth sitting with, because it's the guide's signature trap for this task statement. The failure looks like this: every subagent completes its assigned work correctly — searches run fine, documents get analyzed correctly, synthesis is coherent — but the <em>final output has a coverage gap</em>. When you trace it back, the cause is never a broken subagent. It's that the coordinator's decomposition covered only part of the real topic space, and nothing was ever assigned to cover the rest.</p>
+
+  <div class="anti-pattern">
+    <span class="label">Where people misdiagnose this</span>
+    The instinct is to blame the agent whose output looks thin — "the web search agent needs better queries" or "the synthesis agent is filtering things out." Both agents did their assigned jobs. The bug is one level up, in what they were assigned.
+  </div>
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">You spawn a synthesis subagent with the prompt "Combine findings from the other agents." Its output is generic and never references any of the actual research the other agents produced. What's the most likely cause?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Subagents don't automatically inherit the coordinator's history, so findings must be included directly.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">The synthesis subagent needs a larger context window to combine findings from multiple sources.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">The coordinator should be removed and replaced by one agent with access to every tool.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">The synthesis subagent's system prompt should be rewritten to sound more specific overall.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      Subagents have isolated context — spawning one doesn't hand it the coordinator's conversation history. With no actual findings in its prompt, the subagent has nothing concrete to synthesize and produces something generic by default.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      B assumes a capacity problem, but the subagent has zero findings in context — no window size fixes that. C throws away the observability, error-handling, and routing control the hub-and-spoke pattern exists to provide, and still doesn't put the findings anywhere. D polishes wording without changing what information the subagent actually receives. Fix: pass the real findings into the prompt directly.
+    </div>
+  </div>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A coordinator researching "emerging risks in global supply chains" decomposes it into three subagents: shipping route disruptions, port capacity constraints, and container shortages. The report is well-written but says nothing about cybersecurity, labor disputes, or raw material scarcity — all commonly cited supply-chain risks. What's the most likely root cause?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">The coordinator's decomposition was too narrow, covering one risk category and omitting the others entirely.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">The subagents' search queries were not comprehensive enough and should cover more sources.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">The synthesis agent filtered out findings about cybersecurity, labor, and materials as irrelevant.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">The report needs a longer context window so every risk category fits in a single pass.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      Same failure pattern the Exam Guide covers directly (see its own Sample Question on this exact topic — worth re-reading now). All three subagents were logistics/shipping-specific; cyber, labor, and materials risk were never assigned to anyone. No downstream fix recovers scope that was never delegated.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      B and C both blame agents that executed their assigned scope correctly — there's nothing to search or synthesize for categories nobody was pointed at. D misreads this as a capacity problem; it's a scope problem. This is exactly why the guide treats "narrow decomposition" as its own architectural risk, distinct from any individual subagent's execution quality.
+    </div>
+  </div>
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 1, Task Statement 1.2, and re-read the guide's own worked sample question on the Multi-Agent Research System scenario — it's the same failure mode from a different angle. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+
+  <div class="ask-followup">If you've built a multi-agent pipeline where this bit you for real, that's worth walking through here — real incidents make this stick better than any quiz.</div>
+
+  <div class="nav-links">
+    <a href="0001-agentic-loop-control-flow.html">← Task 1.1 — Agentic Loop Control Flow</a>
+    <a href="0003-subagent-invocation-context-passing-and-spawning.html">Next: Task 1.3 — Subagent Invocation, Context Passing & Spawning →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

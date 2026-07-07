@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3 — Subagent Invocation, Context Passing & Spawning</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 1 · Task Statement 1.3</div>
+  <h1>Subagent Invocation, Context Passing & Spawning</h1>
+  <p class="lede">Spawning a subagent is one line. Getting it the right context, and getting true parallelism, is the actual skill.</p>
+
+
+  <h2>How spawning actually works</h2>
+  <p>The <code>Task</code> tool is the mechanism a coordinator uses to spawn subagents — and the coordinator's own <code>allowedTools</code> must include <code>"Task"</code>, or it simply can't delegate at all. Each subagent type is configured via an <code>AgentDefinition</code>: a description, a system prompt, and tool restrictions specific to that role.</p>
+  <p>The isolation point from the last lesson applies here directly: a spawned subagent gets no automatic context. Whatever it needs — prior findings, tool results, source excerpts — has to be written into its prompt explicitly, using structured formats that separate content from metadata (source URLs, document names, page numbers) so attribution survives.</p>
+
+  <h2>Parallelism is a response-structure decision</h2>
+  <p>If a coordinator has three independent subtasks, spawning them one at a time across three separate turns — waiting for each to finish before starting the next — gets you sequential execution by accident. True parallel execution comes from emitting multiple <code>Task</code> tool calls within a <em>single</em> coordinator response.</p>
+
+  <h2>Write goals, not scripts</h2>
+  <p>Coordinator prompts that specify the research goal and quality bar ("find load-bearing evidence for X, cross-check with at least two sources") let a subagent adapt its approach. Step-by-step procedural instructions lock it into one path even when that path turns out to be wrong.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A coordinator has three fully independent subtasks. It currently emits one Task tool call, waits for that subagent to finish, then emits the next — one per turn, three turns total. What's the most effective change to get true parallel execution?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Emit all three Task tool calls within a single coordinator response so the subagents run in parallel.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Merge the three subtasks into one larger subagent to avoid coordination overhead entirely.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Increase the coordinator's context window so it can track three sequential subagents at once.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Add a system prompt instruction telling the coordinator to work through subtasks more quickly.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      Independent subtasks delegated as multiple Task calls within one response is what actually triggers parallel execution, instead of one-at-a-time sequential waits.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Merging the subtasks throws away the isolation and specialization benefits of separate subagents for no reason — they're independent, not overlapping. A bigger context window doesn't address the real issue, which is turn structure, not capacity. A speed instruction papers over a structural serialization problem instead of fixing it — the coordinator isn't slow, it's blocked waiting on each subagent sequentially by construction.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 1, Task Statement 1.3. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0002-coordinator-subagent-architecture.html">← Task 1.2 — Coordinator-Subagent Hub-and-Spoke</a>
+    <a href="0004-multistep-workflows-enforcement-and-handoff.html">Next: Task 1.4 — Multi-Step Workflows: Enforcement & Handoff →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

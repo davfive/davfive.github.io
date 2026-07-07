@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 16 — Plan Mode vs. Direct Execution</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 3 · Task Statement 3.4</div>
+  <h1>Plan Mode vs. Direct Execution</h1>
+  <p class="lede">The decision is about the shape of the change, not its difficulty.</p>
+
+
+  <h2>When each fits</h2>
+  <p><strong>Plan mode</strong> is for tasks with large-scale changes, multiple valid approaches, real architectural decisions, or multi-file modifications — it lets Claude explore the codebase and design an approach safely before committing to changes, preventing costly rework. <strong>Direct execution</strong> fits simple, well-scoped changes — a single validation check added to one function, a clear stack-trace bug fix.</p>
+  <div class="callout">
+    <span class="label">Isolating the exploration itself</span>
+    Even within plan mode, verbose discovery (searching, reading many files) can consume a lot of context. The <strong>Explore subagent</strong> exists to isolate that verbose output and return only a summary, preserving the main conversation's context budget during multi-phase tasks.
+  </div>
+  <p>These aren't mutually exclusive across a single task: it's common to use plan mode for investigation and design, then switch to direct execution to implement the plan that was produced — e.g., planning a library migration, then executing it.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">You're asked to migrate a library used across 45+ files, where two genuinely different integration approaches are possible depending on infrastructure constraints that aren't yet clear. What's the most effective way to start?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Use plan mode to explore the codebase and weigh the approaches before committing to any changes.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Use direct execution and pick whichever approach seems reasonable, adjusting the code as issues surface.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Skip investigation and ask the user to decide the approach before writing a single line of code.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Split the 45 files into five direct-execution batches of nine files each, applying the same edit to each.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      Architectural implications, multiple valid approaches, and 45+ affected files are exactly the profile plan mode is designed for — exploring and designing safely before committing to changes avoids costly rework mid-migration.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Picking an approach ad hoc under direct execution risks exactly the costly rework plan mode exists to prevent, especially with two genuinely different infrastructure-dependent paths. Deferring entirely to the user skips the investigation Claude is well-suited to do first. Batching by file count assumes the approach is already settled, when the actual open question is which approach to take at all.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 3, Task Statement 3.4. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0015-pathspecific-rules-for-conditional-convention-loading.html">← Task 3.3 — Path-Specific Rules for Conditional Convention Loading</a>
+    <a href="0017-iterative-refinement-for-progressive-improvement.html">Next: Task 3.5 — Iterative Refinement for Progressive Improvement →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

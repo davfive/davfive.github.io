@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 24 — Multi-Instance & Multi-Pass Review Architectures</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 4 · Task Statement 4.6</div>
+  <h1>Multi-Instance & Multi-Pass Review Architectures</h1>
+  <p class="lede">The model that wrote the code is structurally the worst-positioned reviewer of that same code.</p>
+
+
+  <h2>Why self-review underperforms</h2>
+  <p>A model that just generated code retains the reasoning context behind its own decisions in that same session — which makes it less likely to question those decisions when asked to review them. This holds even when explicitly instructed to "review carefully" or given extended thinking; the limitation isn't effort, it's the shared context itself. An independent review instance, without that prior reasoning context, catches subtle issues more reliably.</p>
+  <div class="correct-pattern">
+    <span class="label">Multi-pass for large reviews</span>
+    Splitting a large multi-file review into per-file local-analysis passes plus a separate cross-file integration pass avoids two problems at once: attention dilution (too much to track in one pass) and contradictory findings (different parts of one pass disagreeing with themselves).
+  </div>
+  <p>A further refinement: have each pass self-report a confidence score alongside its findings, so review effort (including human attention) can be routed toward the lower-confidence findings first — this connects directly to Task 5.5's confidence-calibration approach.</p>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">The same Claude session that just implemented a complex refactor across 12 files is then asked, in that same session, to carefully review its own changes for bugs. The review comes back clean, but a subtle cross-file data-flow bug is later found in production. What change would most effectively have caught it?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">Use a second, independent Claude instance with no prior reasoning context to review the changes.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">Ask the same session to review again, this time with extended thinking enabled for more careful analysis.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">Ask the same session to review again, with an explicit instruction to be more skeptical of its own work.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Reduce the refactor's scope to fewer files so the same session can review more thoroughly.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      This is the guide's core distinction: the limitation is the shared reasoning context, not effort or instruction. An independent instance without that context is structurally better positioned to catch what the generator is unlikely to question.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      Extended thinking and stronger skepticism instructions both keep the same underlying limitation in place — the session still carries the reasoning that produced the bug in the first place. Shrinking scope might reduce total surface area but doesn't address why the generating session is a weak reviewer of its own work regardless of size.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 4, Task Statement 4.6. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0023-efficient-batch-processing-strategies.html">← Task 4.5 — Efficient Batch Processing Strategies</a>
+    <a href="../reference/domain-4-cheatsheet.html">Domain 4 cheat sheet →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

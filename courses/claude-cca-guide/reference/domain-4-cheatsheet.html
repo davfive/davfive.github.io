@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference — Domain 4: Prompt Engineering & Structured Output</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .page { max-width: 640px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.8rem 0 1.6rem; }
+  th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  @media print {
+    body { padding: 0.5in; font-size: 13px; }
+    .ask-followup, .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Reference · Domain 4 (20% of exam)</div>
+  <h1>Prompt Engineering & Structured Output</h1>
+  <p class="lede">Print-friendly compression of all 6 Task Statements in this domain.</p>
+
+  <h2>4.1 — Explicit criteria</h2>
+  <ul>
+    <li>"Be conservative" isn't a criterion — it gives no concrete threshold. Behavioral criteria ("flag only when X contradicts Y") do.</li>
+    <li>High false-positive categories erode trust in every other category the same system reports.</li>
+  </ul>
+
+  <h2>4.2 — Few-shot prompting</h2>
+  <ul>
+    <li>Most effective fix when detailed prose still produces inconsistent output.</li>
+    <li>2-4 examples of ambiguous-case handling teach generalizable judgment, not just format.</li>
+  </ul>
+
+  <h2>4.3 — Structured output via tool use</h2>
+  <ul>
+    <li><code>tool_use</code> + JSON schema eliminates syntax errors, not semantic ones (sums, wrong fields).</li>
+    <li>Nullable/optional fields prevent fabrication when info is genuinely absent from the source.</li>
+  </ul>
+
+  <h2>4.4 — Validation, retry, feedback loops</h2>
+  <ul>
+    <li>Retry-with-error-feedback fixes semantic/format errors. It cannot fix information absent from the source.</li>
+    <li><code>detected_pattern</code> fields enable systematic false-positive analysis over time.</li>
+  </ul>
+
+  <h2>4.5 — Batch processing</h2>
+  <ul>
+    <li>Message Batches API: 50% cost savings, up to 24h window, <em>no</em> latency SLA. No multi-turn tool calling mid-request.</li>
+    <li>Fits non-blocking workloads (overnight/weekly); wrong fit for pre-merge blocking checks.</li>
+  </ul>
+
+  <h2>4.6 — Multi-instance &amp; multi-pass review</h2>
+  <ul>
+    <li>Self-review is weak because the session retains its own generation reasoning — not a matter of effort.</li>
+    <li>Split large reviews into per-file passes + a separate cross-file integration pass.</li>
+  </ul>
+
+  <h2>Glossary (Domain 4)</h2>
+  <p><strong>tool_choice "any"</strong>: model must call some tool but picks which — useful when the document type is unknown ahead of time.<br>
+  <strong>custom_id</strong>: correlates a batch request with its response.<br>
+  <strong>Self-review limitation</strong>: a model is less likely to question decisions it just made in the same session.</p>
+
+  <div class="nav-links">
+    <a href="0024-multiinstance-and-multipass-review-architectures.html">← Task 4.6 — Multi-Instance & Multi-Pass Review Architectures</a>
+    <a href="0025-preserving-critical-information-across-long-interactions.html">Domain 5: Context Management & Reliability →</a>
+  </div>
+
+</div>
+</body>
+</html>

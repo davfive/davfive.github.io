@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 14 — Custom Slash Commands & Skills Configuration</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Domain 3 · Task Statement 3.2</div>
+  <h1>Custom Slash Commands & Skills Configuration</h1>
+  <p class="lede">Skills carry real configuration surface: where they live, whether they fork, and what tools they can touch.</p>
+
+
+  <h2>Commands: project vs. personal</h2>
+  <p>Slash commands in <code>.claude/commands/</code> are project-scoped and version-controlled — shared with the whole team. Commands in <code>~/.claude/commands/</code> are user-scoped and personal.</p>
+  <h2>Skills frontmatter that actually matters</h2>
+  <ul>
+    <li><code>context: fork</code> — runs the skill in an isolated sub-agent context, so its (often verbose) output doesn't pollute the main conversation. Ideal for codebase analysis or exploratory brainstorming that generates a lot of intermediate noise.</li>
+    <li><code>allowed-tools</code> — restricts which tools the skill can invoke during execution (e.g., limiting to file-write only, to prevent a skill from taking destructive actions it doesn't need).</li>
+    <li><code>argument-hint</code> — prompts the developer for required parameters if they invoke the skill without arguments.</li>
+  </ul>
+  <p>Personal variants of a skill can live in <code>~/.claude/skills/</code> under a different name — customize your own workflow without changing what teammates get from the shared version.</p>
+  <div class="callout">
+    <span class="label">Skills vs. CLAUDE.md</span>
+    Skills are for on-demand, task-specific workflows you invoke when needed. CLAUDE.md is for universal standards that should always be loaded, every session, without being asked for.
+  </div>
+
+
+  <h2>Check your understanding</h2>
+
+  <div class="quiz" data-quiz>
+    <div class="quiz-eyebrow">Scenario</div>
+    <div class="quiz-scenario">A skill performs a large, verbose codebase analysis, and its full intermediate output — file listings, partial findings, dead ends — has been cluttering the main conversation and eating context budget every time it runs. What frontmatter option addresses this directly?</div>
+    <div class="quiz-options">
+      <div class="quiz-option" data-correct="true"><span class="letter">A</span><span class="text">context: fork, so the skill's exploration runs in an isolated sub-agent and only its result returns.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">B</span><span class="text">allowed-tools, restricted to Read only, so the skill can no longer explore as much of the codebase.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">C</span><span class="text">argument-hint, so developers are prompted to describe what they want analyzed before running it.</span></div>
+      <div class="quiz-option" data-correct="false"><span class="letter">D</span><span class="text">Rewriting the skill as a project-scoped slash command instead of a skill in .claude/skills/.</span></div>
+    </div>
+    <div class="quiz-feedback correct" data-feedback-correct>
+      <span class="label">Correct</span>
+      context: fork exists precisely for this: isolating verbose or exploratory output in a sub-agent context so it never pollutes the main session, while still returning a usable result.
+    </div>
+    <div class="quiz-feedback incorrect" data-feedback-incorrect>
+      <span class="label">Not quite</span>
+      allowed-tools controls which tools can run, not where output lands — restricting to Read would also cripple the analysis itself. argument-hint only affects how missing arguments are requested, not output volume. Converting to a slash command doesn't change the isolation problem; commands don't have the fork behavior skills do.
+    </div>
+  </div>
+
+
+  <h2>Read alongside this</h2>
+  <p class="source-tag">Primary source: Exam Guide PDF — Domain 3, Task Statement 3.2. <a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Open the guide →</a></p>
+  
+
+  <div class="ask-followup">Something here not match how you'd actually approach this, or want to trace it against a real system you've built? Ask — that's usually the most useful thing to dig into.</div>
+
+  <div class="nav-links">
+    <a href="0013-claudemd-hierarchy-scoping-and-modular-organization.html">← Task 3.1 — CLAUDE.md Hierarchy, Scoping & Modular Organization</a>
+    <a href="0015-pathspecific-rules-for-conditional-convention-loading.html">Next: Task 3.3 — Path-Specific Rules for Conditional Convention Loading →</a>
+  </div>
+
+</div>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCA-F Course Home</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .page { max-width: 680px; }
+  .domain-block { margin-bottom: 2rem; }
+  .domain-block h2 { margin-bottom: 0.3rem; }
+  .domain-weight { color: var(--muted); font-size: 0.85rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0 0 0.8rem; }
+  ol.task-list { margin: 0 0 0.6rem; padding-left: 1.4rem; }
+  ol.task-list li { margin-bottom: 0.35rem; }
+  .cheat-link { font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="eyebrow">Claude Certified Architect — Foundations</div>
+  <h1>CCA-F Course Home</h1>
+  <p class="lede">All 30 Task Statements across the exam's 5 domains, in study order. Each lesson ends in a short quiz; each domain ends in a print-friendly cheat sheet. Bookmark this page — every lesson links back here.</p>
+
+  <div class="domain-block">
+    <h2>Domain 1: Agentic Architecture & Orchestration</h2>
+    <p class="domain-weight">27% of exam &middot; 7 task statements</p>
+    <ol class="task-list">
+      <li><a href="lessons/0001-agentic-loop-control-flow.html">Task 1.1 — Agentic Loop Control Flow</a></li>
+      <li><a href="lessons/0002-coordinator-subagent-architecture.html">Task 1.2 — Coordinator-Subagent Hub-and-Spoke</a></li>
+      <li><a href="lessons/0003-subagent-invocation-context-passing-and-spawning.html">Task 1.3 — Subagent Invocation, Context Passing & Spawning</a></li>
+      <li><a href="lessons/0004-multistep-workflows-enforcement-and-handoff.html">Task 1.4 — Multi-Step Workflows: Enforcement & Handoff</a></li>
+      <li><a href="lessons/0005-agent-sdk-hooks-interception-and-normalization.html">Task 1.5 — Agent SDK Hooks: Interception & Normalization</a></li>
+      <li><a href="lessons/0006-task-decomposition-strategies-for-complex-workflows.html">Task 1.6 — Task Decomposition Strategies for Complex Workflows</a></li>
+      <li><a href="lessons/0007-session-state-resumption-and-forking.html">Task 1.7 — Session State, Resumption & Forking</a></li>
+    </ol>
+    <p class="cheat-link"><a href="reference/domain-1-cheatsheet.html">Domain 1 cheat sheet →</a></p>
+  </div>
+
+  <div class="domain-block">
+    <h2>Domain 2: Tool Design & MCP Integration</h2>
+    <p class="domain-weight">18% of exam &middot; 5 task statements</p>
+    <ol class="task-list">
+      <li><a href="lessons/0008-designing-effective-tool-interfaces.html">Task 2.1 — Designing Effective Tool Interfaces</a></li>
+      <li><a href="lessons/0009-structured-error-responses-for-mcp-tools.html">Task 2.2 — Structured Error Responses for MCP Tools</a></li>
+      <li><a href="lessons/0010-tool-distribution-and-toolchoice-configuration.html">Task 2.3 — Tool Distribution & tool_choice Configuration</a></li>
+      <li><a href="lessons/0011-integrating-mcp-servers-into-claude-code-workflows.html">Task 2.4 — Integrating MCP Servers into Claude Code Workflows</a></li>
+      <li><a href="lessons/0012-selecting-builtin-tools-read-write-edit-bash-grep-glob.html">Task 2.5 — Selecting Built-in Tools (Read, Write, Edit, Bash, Grep, Glob)</a></li>
+    </ol>
+    <p class="cheat-link"><a href="reference/domain-2-cheatsheet.html">Domain 2 cheat sheet →</a></p>
+  </div>
+
+  <div class="domain-block">
+    <h2>Domain 3: Claude Code Configuration & Workflows</h2>
+    <p class="domain-weight">20% of exam &middot; 6 task statements</p>
+    <ol class="task-list">
+      <li><a href="lessons/0013-claudemd-hierarchy-scoping-and-modular-organization.html">Task 3.1 — CLAUDE.md Hierarchy, Scoping & Modular Organization</a></li>
+      <li><a href="lessons/0014-custom-slash-commands-and-skills-configuration.html">Task 3.2 — Custom Slash Commands & Skills Configuration</a></li>
+      <li><a href="lessons/0015-pathspecific-rules-for-conditional-convention-loading.html">Task 3.3 — Path-Specific Rules for Conditional Convention Loading</a></li>
+      <li><a href="lessons/0016-plan-mode-vs-direct-execution.html">Task 3.4 — Plan Mode vs. Direct Execution</a></li>
+      <li><a href="lessons/0017-iterative-refinement-for-progressive-improvement.html">Task 3.5 — Iterative Refinement for Progressive Improvement</a></li>
+      <li><a href="lessons/0018-integrating-claude-code-into-ci-cd-pipelines.html">Task 3.6 — Integrating Claude Code into CI/CD Pipelines</a></li>
+    </ol>
+    <p class="cheat-link"><a href="reference/domain-3-cheatsheet.html">Domain 3 cheat sheet →</a></p>
+  </div>
+
+  <div class="domain-block">
+    <h2>Domain 4: Prompt Engineering & Structured Output</h2>
+    <p class="domain-weight">20% of exam &middot; 6 task statements</p>
+    <ol class="task-list">
+      <li><a href="lessons/0019-explicit-criteria-to-improve-precision-and-reduce-false-positives.html">Task 4.1 — Explicit Criteria to Improve Precision & Reduce False Positives</a></li>
+      <li><a href="lessons/0020-fewshot-prompting-for-output-consistency-and-quality.html">Task 4.2 — Few-Shot Prompting for Output Consistency & Quality</a></li>
+      <li><a href="lessons/0021-enforcing-structured-output-with-tool-use-and-json-schemas.html">Task 4.3 — Enforcing Structured Output with Tool Use & JSON Schemas</a></li>
+      <li><a href="lessons/0022-validation-retry-and-feedback-loops-for-extraction-quality.html">Task 4.4 — Validation, Retry & Feedback Loops for Extraction Quality</a></li>
+      <li><a href="lessons/0023-efficient-batch-processing-strategies.html">Task 4.5 — Efficient Batch Processing Strategies</a></li>
+      <li><a href="lessons/0024-multiinstance-and-multipass-review-architectures.html">Task 4.6 — Multi-Instance & Multi-Pass Review Architectures</a></li>
+    </ol>
+    <p class="cheat-link"><a href="reference/domain-4-cheatsheet.html">Domain 4 cheat sheet →</a></p>
+  </div>
+
+  <div class="domain-block">
+    <h2>Domain 5: Context Management & Reliability</h2>
+    <p class="domain-weight">15% of exam &middot; 6 task statements</p>
+    <ol class="task-list">
+      <li><a href="lessons/0025-preserving-critical-information-across-long-interactions.html">Task 5.1 — Preserving Critical Information Across Long Interactions</a></li>
+      <li><a href="lessons/0026-escalation-and-ambiguity-resolution-patterns.html">Task 5.2 — Escalation & Ambiguity Resolution Patterns</a></li>
+      <li><a href="lessons/0027-error-propagation-strategies-across-multiagent-systems.html">Task 5.3 — Error Propagation Strategies Across Multi-Agent Systems</a></li>
+      <li><a href="lessons/0028-managing-context-in-large-codebase-exploration.html">Task 5.4 — Managing Context in Large Codebase Exploration</a></li>
+      <li><a href="lessons/0029-human-review-workflows-and-confidence-calibration.html">Task 5.5 — Human Review Workflows & Confidence Calibration</a></li>
+      <li><a href="lessons/0030-information-provenance-and-uncertainty-in-multisource-synthesis.html">Task 5.6 — Information Provenance & Uncertainty in Multi-Source Synthesis</a></li>
+    </ol>
+    <p class="cheat-link"><a href="reference/domain-5-cheatsheet.html">Domain 5 cheat sheet →</a></p>
+  </div>
+
+
+  <h2>Reference</h2>
+  <ul>
+    <li><a href="glossary.html">Glossary</a> (all domains, one page)</li>
+    <li><a href="https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F34hhd92iyp94a0gtbr15cy5jk%2Fpublic%2F1782870727%2FClaude+Certified+Architect+-+Foundations+-+Exam+Guide.pdf" target="_blank" rel="noopener">Official Exam Guide PDF →</a></li>
+  </ul>
+
+</div>
+</body>
+</html>

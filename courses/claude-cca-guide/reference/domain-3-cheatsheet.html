@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference — Domain 3: Claude Code Configuration & Workflows</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .page { max-width: 640px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.8rem 0 1.6rem; }
+  th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  @media print {
+    body { padding: 0.5in; font-size: 13px; }
+    .ask-followup, .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="home-link"><a href="../index.html">↩ CCA-F Course Home</a></div>
+  <div class="eyebrow">CCA-F · Reference · Domain 3 (20% of exam)</div>
+  <h1>Claude Code Configuration & Workflows</h1>
+  <p class="lede">Print-friendly compression of all 6 Task Statements in this domain.</p>
+
+  <h2>3.1 — CLAUDE.md hierarchy</h2>
+  <ul>
+    <li>User-level (<code>~/.claude/CLAUDE.md</code>, personal, not shared) &middot; project-level (shared via VCS) &middot; directory-level (package/module-specific).</li>
+    <li><code>@import</code> for modular standards; <code>.claude/rules/</code> for topic-split files; <code>/memory</code> to diagnose what's actually loaded.</li>
+  </ul>
+
+  <h2>3.2 — Slash commands &amp; skills</h2>
+  <ul>
+    <li><code>.claude/commands/</code> (project, shared) vs. <code>~/.claude/commands/</code> (personal).</li>
+    <li>Skill frontmatter: <code>context: fork</code> (isolate verbose output) &middot; <code>allowed-tools</code> (restrict) &middot; <code>argument-hint</code> (prompt for args).</li>
+  </ul>
+
+  <h2>3.3 — Path-specific rules</h2>
+  <ul>
+    <li><code>.claude/rules/</code> + YAML <code>paths</code> glob = loads only for matching files, regardless of directory.</li>
+    <li>Use for conventions defined by file type; use directory CLAUDE.md for conventions defined by location.</li>
+  </ul>
+
+  <h2>3.4 — Plan mode vs. direct execution</h2>
+  <ul>
+    <li>Plan mode: architectural decisions, multiple approaches, multi-file changes. Direct execution: simple, well-scoped changes.</li>
+    <li>Explore subagent isolates verbose discovery output to protect main context.</li>
+  </ul>
+
+  <h2>3.5 — Iterative refinement</h2>
+  <ul>
+    <li>Concrete input/output examples beat more prose for ambiguous transformations.</li>
+    <li>Test-driven iteration; the interview pattern (Claude asks first); batch interacting issues, sequence independent ones.</li>
+  </ul>
+
+  <h2>3.6 — CI/CD integration</h2>
+  <ul>
+    <li><code>-p</code>/<code>--print</code> for non-interactive mode; <code>--output-format json</code> + <code>--json-schema</code> for structured findings.</li>
+    <li>Self-review is structurally weaker than independent review (shared reasoning context).</li>
+    <li>Include prior findings in context on re-runs to avoid duplicate comments.</li>
+  </ul>
+
+  <h2>Glossary (Domain 3)</h2>
+  <p><strong>context: fork</strong>: skill frontmatter option running the skill in an isolated sub-agent context.<br>
+  <strong>Explore subagent</strong>: isolates verbose codebase discovery, returns a summary.<br>
+  <strong>Session isolation (CI)</strong>: the reason a generating session reviews its own code less effectively than an independent instance.</p>
+
+  <div class="nav-links">
+    <a href="0018-integrating-claude-code-into-ci-cd-pipelines.html">← Task 3.6 — Integrating Claude Code into CI/CD Pipelines</a>
+    <a href="0019-explicit-criteria-to-improve-precision-and-reduce-false-positives.html">Domain 4: Prompt Engineering & Structured Output →</a>
+  </div>
+
+</div>
+</body>
+</html>

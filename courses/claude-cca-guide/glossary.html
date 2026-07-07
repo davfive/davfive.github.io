@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCA-F Glossary</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .page { max-width: 680px; }
+  h1 { margin-bottom: 0.2rem; }
+  ul { margin: 0 0 1.2rem; padding-left: 1.3rem; }
+  li { margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="home-link"><a href="index.html">↩ CCA-F Course Home</a></div>
+<div class="eyebrow">CCA-F · Reference</div>
+<h1>CCA-F Glossary</h1>
+<p>Compiled from all five domains. Terms are grounded in the official Exam Guide's Knowledge/Skills bullets, not paraphrased casually.</p>
+<h2>Domain 1 — Agentic Architecture & Orchestration</h2>
+<ul>
+  <li><strong>Hub-and-spoke</strong>: architecture where a coordinator routes all inter-agent communication; no agent talks directly to another.</li>
+  <li><strong>Isolated context</strong>: a subagent's default state — no memory of the coordinator's prior conversation unless explicitly given it.</li>
+  <li><strong>Narrow decomposition</strong>: a task breakdown that omits whole categories of a topic, not just under-executes one.</li>
+  <li><strong>Deterministic enforcement</strong>: a hook or programmatic gate that makes skipping a step physically impossible, vs. prompt guidance which only makes it unlikely.</li>
+  <li><strong>stop_reason</strong>: the API's structured signal (<code>tool_use</code> / <code>end_turn</code>) for why generation stopped — the only reliable agentic-loop control signal.</li>
+</ul>
+<h2>Domain 2 — Tool Design & MCP Integration</h2>
+<ul>
+  <li><strong>isError</strong>: MCP's tool-failure flag; needs structured category info (transient/validation/business/permission) alongside it to be useful.</li>
+  <li><strong>tool_choice</strong>: <code>"auto"</code> (may skip), <code>"any"</code> (must call, picks which), or forced (<code>{"type": "tool", "name": "..."}</code>, must call this one).</li>
+  <li><strong>Scoped tool access</strong>: giving each agent only the tools its role actually needs, to reduce misuse and selection complexity.</li>
+  <li><strong>MCP resources</strong>: content catalogs a server exposes directly, cutting down exploratory tool calls.</li>
+</ul>
+<h2>Domain 3 — Claude Code Configuration & Workflows</h2>
+<ul>
+  <li><strong>CLAUDE.md hierarchy</strong>: user-level (personal, not shared), project-level (shared via VCS), directory-level (module-specific).</li>
+  <li><strong>context: fork</strong>: skill frontmatter option that runs the skill in an isolated sub-agent context, keeping verbose output out of the main session.</li>
+  <li><strong>Path-specific rules</strong>: <code>.claude/rules/</code> files with YAML <code>paths</code> globs, loaded only when a matching file is being edited.</li>
+  <li><strong>Explore subagent</strong>: isolates verbose codebase discovery, returning only a summary to the main conversation.</li>
+  <li><strong>Session isolation (CI)</strong>: the reason a generating session reviews its own code less effectively than an independent review instance.</li>
+</ul>
+<h2>Domain 4 — Prompt Engineering & Structured Output</h2>
+<ul>
+  <li><strong>Explicit criteria</strong>: concrete, checkable review/classification rules, as opposed to vague guidance like "be conservative."</li>
+  <li><strong>Few-shot generalization</strong>: examples of ambiguous-case handling that teach transferable judgment, not just output format.</li>
+  <li><strong>Semantic vs. syntax error</strong>: tool_use/JSON schemas eliminate syntax errors; they do not catch values that are individually well-formed but collectively wrong (e.g., totals that don't sum).</li>
+  <li><strong>Message Batches API</strong>: 50% cost savings, up to 24-hour processing window, no latency SLA, no mid-request multi-turn tool calling.</li>
+  <li><strong>Self-review limitation</strong>: a model is less likely to question decisions it just made in the same session, regardless of instruction or extended thinking.</li>
+</ul>
+<h2>Domain 5 — Context Management & Reliability</h2>
+<ul>
+  <li><strong>Lost in the middle</strong>: the effect where models reliably attend to the start/end of long inputs but may drop findings from the middle.</li>
+  <li><strong>Case facts block</strong>: a persistent, non-summarized record of transactional facts (amounts, dates, IDs) carried in every prompt.</li>
+  <li><strong>Access failure vs. valid empty result</strong>: a timeout needing a retry decision, vs. a successful query that legitimately found nothing — must be reported differently.</li>
+  <li><strong>Coverage annotation</strong>: synthesis metadata distinguishing well-supported findings from areas with real evidentiary gaps.</li>
+  <li><strong>Claim-source mapping</strong>: structured attribution (source, excerpt) that must be preserved, not dropped, through every synthesis stage.</li>
+</ul>
+<div class="nav-links">
+  <a href="index.html">← Course index</a>
+</div>
+</div>
+</body>
+</html>
